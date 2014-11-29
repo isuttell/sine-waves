@@ -1,0 +1,40 @@
+{
+  "name": "sine-waves",
+  "version": "v0.1.0",
+  "description": "Generate multiple configurable sine waves",
+  "homepage": "https://github.com/isuttell/sine-waves",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isuttell/sine-waves.git"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "contributors": [
+    "Isaac Suttell <isaac@isaacsuttell.com>"
+  ],
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "grunt-asciify": "^0.2.2",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs": "^0.8.1",
+    "grunt-jsvalidate": "^0.2.2",
+    "grunt-karma": "~0.9.0",
+    "grunt-flow-type-check": "~0.2.1",
+    "jasmine-core": "^2.1.2",
+    "jit-grunt": "^0.9.0",
+    "karma": "~0.12.24",
+    "karma-chrome-launcher": "^0.1.5",
+    "karma-coverage": "~0.2.6",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-html-reporter": "^0.2.4",
+    "karma-jasmine": "^0.3.0",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-story-reporter": "~0.2.2"
+  }
+}

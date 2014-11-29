@@ -1,0 +1,108 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
+#HTMLReporter { font-size: 11px; font-family: Monaco, "Lucida Console", monospace; line-height: 14px; color: #333333; }
+#HTMLReporter a { text-decoration: none; }
+#HTMLReporter a:hover { text-decoration: underline; }
+#HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 1.6; }
+#HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
+#HTMLReporter #jasmine_content { position: fixed; right: 100%; }
+#HTMLReporter .version { color: #aaaaaa; }
+#HTMLReporter .banner { margin-top: 14px; }
+#HTMLReporter .duration { color: #aaaaaa; float: right; }
+#HTMLReporter .exceptions { color: #fff; float: right; margin-top: 5px; margin-right: 5px; }
+#HTMLReporter .bar { line-height: 28px; font-size: 14px; display: block; color: #eee; }
+#HTMLReporter .runningAlert { background-color: #666666; }
+#HTMLReporter .skippedAlert { background-color: #aaaaaa; }
+#HTMLReporter .skippedAlert:first-child { background-color: #333333; }
+#HTMLReporter .skippedAlert:hover { text-decoration: none; color: white; text-decoration: underline; }
+#HTMLReporter .passingAlert { background-color: #a6b779; }
+#HTMLReporter .passingAlert:first-child { background-color: #5e7d00; }
+#HTMLReporter .failingAlert { background-color: #cf867e; }
+#HTMLReporter .failingAlert:first-child { background-color: #b03911; }
+#HTMLReporter .results { margin-top: 14px; }
+#HTMLReporter #details { display: none; }
+#HTMLReporter .resultsMenu, #HTMLReporter .resultsMenu a { background-color: #fff; color: #333333; }
+#HTMLReporter.showDetails .summaryMenuItem { font-weight: normal; text-decoration: inherit; }
+#HTMLReporter.showDetails .summaryMenuItem:hover { text-decoration: underline; }
+#HTMLReporter.showDetails .detailsMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter.showDetails .summary { display: none; }
+#HTMLReporter.showDetails #details { display: block; }
+#HTMLReporter .summaryMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter .summary { margin-top: 14px; }
+#HTMLReporter .summary .suite .suite, #HTMLReporter .summary .specSummary { margin-left: 14px; }
+#HTMLReporter .summary .specSummary.passed span { color: #5e7d00; }
+#HTMLReporter .summary .specSummary.failed span { color: #b03911; }
+#HTMLReporter .description + .suite { margin-top: 0; }
+#HTMLReporter .suite { margin-top: 14px; }
+#HTMLReporter .suite a { color: #333333; }
+#HTMLReporter #details .specDetail { margin-bottom: 28px; }
+#HTMLReporter #details .specDetail .description { display: block; color: white; background-color: #b03911; }
+#HTMLReporter .resultMessage { padding-top: 14px; color: #333333; }
+#HTMLReporter .resultMessage span.result { display: block; }
+#HTMLReporter .stackTrace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666666; border: 1px solid #ddd; background: white; white-space: pre; }
+</style>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script>
+ 	$(function(){
+		$("a.summaryMenuItem").on("click", function(){
+			$("body").removeClass("showDetails").addClass("showSummary");
+		});
+		$("a.detailsMenuItem").on("click", function(){
+			$("body").addClass("showDetails").removeClass("showSummary");
+		});
+
+	});
+ </script>
+</head>
+
+<body id="HTMLReporter" class="html-reporter{{#results.hasFailed}} showDetails{{/results.hasFailed}}">
+<h1>{{browserName}}</h1>
+
+<div class="alert">
+{{#results}}
+{{#hasFailed}}
+<span class="failingAlert bar">Failed {{failed}} specs</span>
+<span class="resultsMenu bar">
+<a class="summaryMenuItem" href="#">{{total}} specs<a>|<a class="detailsMenuItem" href="#">{{failed}} failing</a>
+</span>
+{{/hasFailed}}
+{{^hasFailed}}
+	{{#hasSuccess}}
+	<span class="passingAlert bar">Passing {{success}} specs</span>
+	{{/hasSuccess}}
+{{/hasFailed}}
+{{/results}}
+</div>
+<div class="results">
+	<div class="summary">
+
+
+	{{#suites}}
+		<div class="suite {{state}}">
+			<span class="description">{{name}}</span>
+		{{#specs}}
+			<div class="specSummary {{state}}">
+			<span class="description">{{description}}</span>
+			</div>
+		{{/specs}}
+		</div>
+	{{/suites}}
+</div>
+
+<div id="details">
+	{{#failedSuites}}
+	{{#specs}}
+	<div class="specDetail {{state}}">
+		<span class="description">{{name}} {{description}}</span>
+		<div class="stackTrace">
+			<div class="resultMessage">{{log}}</div>
+		</div>
+	</div>
+	{{/specs}}
+	{{/failedSuites}}
+</div>
+</body>
+</html>

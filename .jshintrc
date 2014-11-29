@@ -1,0 +1,16 @@
+{
+  "camelcase" : true,
+  "newcap"    : true,
+  "strict"    : true,
+  "trailing"  : true,
+  "browser"   : true,
+  "jquery"    : true,
+  "undef"     : true,
+  "unused"    : true,
+  "quotmark"  : false,
+  "node"      : "true",
+  "maxcomplexity": 8,
+  "globals"   : {
+    "define": false
+  }
+}

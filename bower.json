@@ -1,0 +1,28 @@
+{
+  "name": "sine-waves",
+  "main": "sine-waves.js",
+  "version": "1.0.1-alpha",
+  "homepage": "https://github.com/isuttell/sine-waves",
+  "authors": [
+    "Isaac Suttell <isaac@e-mc2.com>"
+  ],
+  "description": "Generate multiple configurable sine waves",
+  "keywords": [
+    "canvas",
+    "sine waves",
+    "animation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "tests",
+    "tasks",
+    ".gitignore",
+    ".jshintrc",
+    ".jscsrc",
+    ".travis.yml",
+    ".coveralls.yml",
+    "Gruntfile.js",
+    "package.json"
+  ]
+}
