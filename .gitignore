@@ -1,3 +1,7 @@
+params.json
+index.html
+stylesheets/
+javascript/
 npm-debug.log
 node_modules/
 .DS_Store
