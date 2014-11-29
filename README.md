@@ -56,6 +56,10 @@ var waves = new SineWaves({
 });
 ```
 
+## Examples on Codepen
+
+* [The Basics](http://codepen.io/isuttell/pen/vENOZw)
+
 ## License
 SineWaves is open-sourced software licensed under the MIT license
 
