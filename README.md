@@ -59,6 +59,7 @@ var waves = new SineWaves({
 ## Examples on Codepen
 
 * [The Basics](http://codepen.io/isuttell/pen/vENOZw)
+* [Animated Borders](http://codepen.io/isuttell/pen/PwPqOw)
 
 ## License
 SineWaves is open-sourced software licensed under the MIT license
