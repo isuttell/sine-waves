@@ -1,6 +1,6 @@
 # sine-waves.js
 
-Generator multiple configurable sine waves
+Generate multiple configurable sine waves using a `canvas` element
 
 [![Build Status](http://img.shields.io/travis/isuttell/sine-waves.svg?style=flat)](https://travis-ci.org/isuttell/sine-waves)
 [![Coverage Status](https://img.shields.io/coveralls/isuttell/sine-waves.svg?style=flat)](https://coveralls.io/r/isuttell/sine-waves)
@@ -122,5 +122,5 @@ In addition to the default Sine wave can also generate, `Square`, `Sawtooth`, an
 SineWaves is open-sourced software licensed under the MIT license
 
 ## Release History
-- v0.2.0 - Added rotate, ease, wavesWidth and wave types options
-- v0.1.0 - Initial Release
+- v0.2.0-alpha - Added rotate, ease, wavesWidth and wave types options
+- v0.1.0-alpha - Initial Release
