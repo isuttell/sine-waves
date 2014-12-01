@@ -1,6 +1,6 @@
 {
   "name": "sine-waves",
-  "version": "v0.1.0",
+  "version": "v0.2.0-alpha",
   "description": "Generate multiple configurable sine waves",
   "homepage": "https://github.com/isuttell/sine-waves",
   "repository": {

@@ -1,10 +1,10 @@
 {
   "name": "sine-waves",
   "main": "sine-waves.js",
-  "version": "1.0.1-alpha",
+  "version": "0.2.0-alpha",
   "homepage": "https://github.com/isuttell/sine-waves",
   "authors": [
-    "Isaac Suttell <isaac@e-mc2.com>"
+    "Isaac Suttell <isaac@isaacsuttell.com>"
   ],
   "description": "Generate multiple configurable sine waves",
   "keywords": [

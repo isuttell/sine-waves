@@ -100,7 +100,8 @@ describe('sine-waves.js', function() {
         el: element,
         waves: [{}],
         height: 100,
-        width: 100
+        width: 100,
+        ease: 'SineInOut'
       });
 
       waveOptions = {
@@ -133,15 +134,64 @@ describe('sine-waves.js', function() {
 
   });
 
-  describe('ease', function() {
+  describe('Ease.Linear', function() {
     it('should ease a value from left to right', function () {
-      expect(SineWaves.prototype.ease(0, 100)).toBeCloseTo(0);
-      expect(SineWaves.prototype.ease(0.25, 100)).toBeCloseTo(50);
-      expect(SineWaves.prototype.ease(0.5, 100)).toBeCloseTo(100);
-      expect(SineWaves.prototype.ease(0.75, 100)).toBeCloseTo(50);
-      expect(SineWaves.prototype.ease(1, 100)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Ease['Linear'](0, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['Linear'](0.25, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['Linear'](0.5, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['Linear'](0.75, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['Linear'](1, 100)).toBeCloseTo(100);
     });
   });
+
+  describe('Ease.SineInOut', function() {
+    it('should ease a value from left to right', function () {
+      expect(SineWaves.prototype.Ease['SineInOut'](0, 100)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Ease['SineInOut'](0.25, 100)).toBeCloseTo(50);
+      expect(SineWaves.prototype.Ease['SineInOut'](0.5, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['SineInOut'](0.75, 100)).toBeCloseTo(50);
+      expect(SineWaves.prototype.Ease['SineInOut'](1, 100)).toBeCloseTo(0);
+    });
+  });
+
+  describe('Ease.SineIn', function() {
+    it('should ease a value from left to right', function () {
+      expect(SineWaves.prototype.Ease['SineIn'](0, 100)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Ease['SineIn'](0.25, 100)).toBeCloseTo(14.644660940672626);
+      expect(SineWaves.prototype.Ease['SineIn'](0.5, 100)).toBeCloseTo(50);
+      expect(SineWaves.prototype.Ease['SineIn'](0.75, 100)).toBeCloseTo(85.35533905932738);
+      expect(SineWaves.prototype.Ease['SineIn'](1, 100)).toBeCloseTo(100);
+    });
+  });
+
+  describe('Ease.SineOut', function() {
+    it('should ease a value from left to right', function () {
+      expect(SineWaves.prototype.Ease['SineOut'](0, 100)).toBeCloseTo(100);
+      expect(SineWaves.prototype.Ease['SineOut'](0.25, 100)).toBeCloseTo(85.35533905932738);
+      expect(SineWaves.prototype.Ease['SineOut'](0.5, 100)).toBeCloseTo(50);
+      expect(SineWaves.prototype.Ease['SineOut'](0.75, 100)).toBeCloseTo(14.644660940672626);
+      expect(SineWaves.prototype.Ease['SineOut'](1, 100)).toBeCloseTo(0);
+    });
+  });
+
+  describe('getEaseFn', function() {
+    it('should return a function if passed a function', function() {
+      var expectedFn = function(){};
+      expect( SineWaves.prototype.getEaseFn(expectedFn) ).toBe(expectedFn);
+    });
+
+    it('should return a function if passed a ease function name', function() {
+      expect(SineWaves.prototype.getEaseFn('Linear')).toBe(SineWaves.prototype.Ease.Linear);
+      expect(SineWaves.prototype.getEaseFn('SineIn')).toBe(SineWaves.prototype.Ease.SineIn);
+      expect(SineWaves.prototype.getEaseFn('SineOut')).toBe(SineWaves.prototype.Ease.SineOut);
+      expect(SineWaves.prototype.getEaseFn('SineInOut')).toBe(SineWaves.prototype.Ease.SineInOut);
+    });
+
+    it('should default to Linear', function() {
+      expect(SineWaves.prototype.getEaseFn('FakeEase')).toBe(SineWaves.prototype.Ease.Linear);
+    });
+  })
+
 
   describe('degreesToRadians', function() {
     it('should convert radians to degrees' , function() {
@@ -156,6 +206,19 @@ describe('sine-waves.js', function() {
       expect(function() {
         SineWaves.prototype.degreesToRadians({});
       }).toThrow(new TypeError('Degrees is not a number'));
+    })
+  });
+
+  describe('rotation', function() {
+    it('should return the radians of options.rotate', function (){
+      var waves = new SineWaves({
+        el: element,
+        waves: [{}],
+        width: 100,
+        height: 100,
+        rotate: 180
+      });
+      expect(waves.rotation()).toBe(Math.PI);
     })
   });
 

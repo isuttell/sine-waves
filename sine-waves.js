@@ -148,9 +148,30 @@
     // Set the speed
     this.speed = this.options.speed;
 
+    // Setup Easing
+    this.easeFn = this.getEaseFn(this.options.ease);
+
     // Start the magic
     this.loop();
   }
+
+  /**
+   * You can either directly specify a easing function, use a built in function
+   * or default to the basic SineInOut
+   *
+   * @param     {Mixed}    ease    String || Function
+   *
+   * @return    {Function}
+   */
+  SineWaves.prototype.getEaseFn = function(ease) {
+    if (isType(ease, 'function')) {
+      return ease;
+    } else if (isType(ease, 'string') && isType(Ease[ease], 'function')) {
+      return Ease[ease];
+    } else {
+      return Ease.Linear;
+    }
+  };
 
   /**
    * Sets up the user resize event and the initialize event
@@ -175,7 +196,8 @@
    */
   SineWaves.prototype.options = {
     speed: 10,
-    rotate: 0
+    rotate: 0,
+    ease: 'Linear'
   };
 
   /**
@@ -298,6 +320,8 @@
     length = void 0;
   };
 
+  var Ease = SineWaves.prototype.Ease = {};
+
   /**
    * Twice of PI
    *
@@ -315,6 +339,18 @@
   var HALFPI = Math.PI / 2;
 
   /**
+   * Do not apply any easing
+   *
+   * @param  {Number} percent   where in the line are we?
+   * @param  {Number} amplitude the current strength
+   *
+   * @return {Number}           the new strength
+   */
+  SineWaves.prototype.Ease.Linear = function(percent, amplitude) {
+    return amplitude;
+  };
+
+  /**
    * Easing function to control how string each wave is from
    * left to right
    *
@@ -323,7 +359,33 @@
    *
    * @return {Number}           the new strength
    */
-  SineWaves.prototype.ease = function(percent, amplitude) {
+  SineWaves.prototype.Ease.SineIn = function(percent, amplitude) {
+    return amplitude * (Math.sin(percent * Math.PI - HALFPI) + 1) * 0.5;
+  };
+
+  /**
+   * Easing function to control how string each wave is from
+   * left to right
+   *
+   * @param  {Number} percent   where in the line are we?
+   * @param  {Number} amplitude the current strength
+   *
+   * @return {Number}           the new strength
+   */
+  SineWaves.prototype.Ease.SineOut = function(percent, amplitude) {
+    return amplitude * (Math.sin(percent * Math.PI + HALFPI) + 1) * 0.5;
+  };
+
+  /**
+   * Easing function to control how string each wave is from
+   * left to right
+   *
+   * @param  {Number} percent   where in the line are we?
+   * @param  {Number} amplitude the current strength
+   *
+   * @return {Number}           the new strength
+   */
+  SineWaves.prototype.Ease.SineInOut = function(percent, amplitude) {
     return amplitude * (Math.sin(percent * PI2 - HALFPI) + 1) * 0.5;
   };
 
@@ -341,7 +403,7 @@
     var y = Math.sin(x);
 
     // Left and Right Sine Easing
-    var amplitude = this.ease(position / this.waveWidth, options.amplitude);
+    var amplitude = this.easeFn(position / this.waveWidth, options.amplitude);
 
     x = position + this.waveLeft;
     y = amplitude * y + this.yAxis;

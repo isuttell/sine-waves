@@ -17,18 +17,27 @@ bower install sine-waves --save
 ## Basic Usage
 ```js
 var waves = new SineWaves({
+  // Canvas Element
   el: document.getElementById('waves'),
 
+  // General speed of entire wave system
   speed: 8,
 
+  // How many degress should we rotate all of the waves
+  rotate: 0,
+
+  // Ease function from left to right
+  ease: 'Linear',
+
+  // An array of wave options
   waves: [
     {
-      timeModifier: 1,
-      lineWidth: 3,
-      amplitude: 150,
-      wavelength: 200,
-      segmentLength: 20,
-      strokeStyle: 'rgba(255, 255, 255, 0.5)'
+      timeModifier: 1, // This is multiplied againse `speed`
+      lineWidth: 3, // Stroke width
+      amplitude: 150,  // How tall is the wave
+      wavelength: 200, // How long is the wave
+      segmentLength: 20, // How smooth should the line be
+      strokeStyle: 'rgba(255, 255, 255, 0.5)' // Stroke color and opacity
     },
     {
       timeModifier: 1,
@@ -60,6 +69,23 @@ var waves = new SineWaves({
     }
   }
 });
+```
+
+## Easing
+The default easing is `Linear` which means the waves are not modified from left to right. Additionally you can specify one of the following easing functions to the waves to modify the amplitude of each wave throughout the width of the canvas.
+
+* `Linear`
+* `SineIn`
+* `SineOut`
+* `SineInOut`
+
+Alternatively you can pass a function directly to the `ease` option when creating a SineWaves instance.
+
+```js
+  // Example of the Linear function
+  ease: function(percent, amplitude) {
+    return amplitude;
+  },
 ```
 
 ## Examples on Codepen
