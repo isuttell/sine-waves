@@ -4,7 +4,7 @@
  |______   |   | \  | |______      |  |  | |_____|  \  /  |______ |______
  ______| __|__ |  \_| |______      |__|__| |     |   \/   |______ ______|
 
- sine-waves v0.1.0 <https://github.com/isuttell/sine-waves>
+ https://github.com/isuttell/sine-waves
  Contributor(s): Isaac Suttell <isaac@isaacsuttell.com>
  */
 
