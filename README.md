@@ -6,7 +6,13 @@ Generator multiple configurable sine waves
 [![Coverage Status](https://img.shields.io/coveralls/isuttell/sine-waves.svg?style=flat)](https://coveralls.io/r/isuttell/sine-waves)
 [![Codacy Badge](https://www.codacy.com/project/badge/a52fd69032474c0ca88dc06ab69a9839)](https://www.codacy.com/public/isuttell/sine-waves)
 [![Dev Dependencies](http://img.shields.io/david/dev/isuttell/sine-waves.svg?style=flat)](https://david-dm.org/isuttell/sine-waves#info=devDependencies)
-[![Release](http://img.shields.io/github/release/isuttell/sine-waves.svg?style=flat)](https://github.com/isuttell/sine-waves/tarball/master)
+[![Release](https://img.shields.io/bower/v/sine-waves.svg?style=flat)](https://github.com/isuttell/sine-waves/tarball/master)
+
+## Bower
+
+```shell
+bower install sine-waves --save
+```
 
 ## Basic Usage
 ```js
