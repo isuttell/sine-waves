@@ -106,7 +106,8 @@ describe('sine-waves.js', function() {
 
       waveOptions = {
         amplitude: 10,
-        wavelength: 10
+        wavelength: 10,
+        waveFn: SineWaves.prototype.Waves.Sine
       };
     });
 
@@ -174,21 +175,21 @@ describe('sine-waves.js', function() {
     });
   });
 
-  describe('getEaseFn', function() {
+  describe('Easing', function() {
     it('should return a function if passed a function', function() {
       var expectedFn = function(){};
-      expect( SineWaves.prototype.getEaseFn(expectedFn) ).toBe(expectedFn);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, expectedFn, 'Linear')).toBe(expectedFn);
     });
 
     it('should return a function if passed a ease function name', function() {
-      expect(SineWaves.prototype.getEaseFn('Linear')).toBe(SineWaves.prototype.Ease.Linear);
-      expect(SineWaves.prototype.getEaseFn('SineIn')).toBe(SineWaves.prototype.Ease.SineIn);
-      expect(SineWaves.prototype.getEaseFn('SineOut')).toBe(SineWaves.prototype.Ease.SineOut);
-      expect(SineWaves.prototype.getEaseFn('SineInOut')).toBe(SineWaves.prototype.Ease.SineInOut);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, 'Linear', 'Linear')).toBe(SineWaves.prototype.Ease.Linear);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, 'SineIn', 'Linear')).toBe(SineWaves.prototype.Ease.SineIn);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, 'SineOut', 'Linear')).toBe(SineWaves.prototype.Ease.SineOut);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, 'SineInOut', 'Linear')).toBe(SineWaves.prototype.Ease.SineInOut);
     });
 
     it('should default to Linear', function() {
-      expect(SineWaves.prototype.getEaseFn('FakeEase')).toBe(SineWaves.prototype.Ease.Linear);
+      expect(SineWaves.prototype.getFn(SineWaves.prototype.Ease, 'FakeEase', 'Linear')).toBe(SineWaves.prototype.Ease.Linear);
     });
   })
 
@@ -260,6 +261,46 @@ describe('sine-waves.js', function() {
       waves.updateDimensions();
       expect(waves.waveWidth).toBe(70);
       expect(waves.waveLeft).toBe(15);
+    });
+  });
+
+  describe('Waves.Sine', function() {
+    it('should calculate a sine wave', function(){
+      expect(SineWaves.prototype.Waves.Sine(0)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Waves.Sine(0.25)).toBeCloseTo(0.24740395925452294);
+      expect(SineWaves.prototype.Waves.Sine(0.5)).toBeCloseTo(0.479425538604203);
+      expect(SineWaves.prototype.Waves.Sine(0.75)).toBeCloseTo(0.6816387600233342);
+      expect(SineWaves.prototype.Waves.Sine(1)).toBeCloseTo(0.8414709848078965);
+    });
+  });
+
+  describe('Waves.Square', function() {
+    it('should calculate a square sine wave', function(){
+      expect(SineWaves.prototype.Waves.Square(0)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Waves.Square(0.25)).toBeCloseTo(1);
+      expect(SineWaves.prototype.Waves.Square(0.5)).toBeCloseTo(1);
+      expect(SineWaves.prototype.Waves.Square(0.75)).toBeCloseTo(-1);
+      expect(SineWaves.prototype.Waves.Square(1)).toBeCloseTo(-1);
+    });
+  });
+
+  describe('Waves.Sawtooth', function() {
+    it('should calculate a square sine wave', function(){
+      expect(SineWaves.prototype.Waves.Sawtooth(0)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.25)).toBeCloseTo(0.25);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.5)).toBeCloseTo(-0.5);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.75)).toBeCloseTo(-0.25);
+      expect(SineWaves.prototype.Waves.Sawtooth(1)).toBeCloseTo(0);
+    });
+  });
+
+  describe('Waves.Triangle', function() {
+    it('should calculate a square sine wave', function(){
+      expect(SineWaves.prototype.Waves.Triangle(0)).toBeCloseTo(0);
+      expect(SineWaves.prototype.Waves.Triangle(0.25)).toBeCloseTo(0.25);
+      expect(SineWaves.prototype.Waves.Triangle(0.5)).toBeCloseTo(0.5);
+      expect(SineWaves.prototype.Waves.Triangle(0.75)).toBeCloseTo(0.25);
+      expect(SineWaves.prototype.Waves.Triangle(1)).toBeCloseTo(0);
     });
   });
 

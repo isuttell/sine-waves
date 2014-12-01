@@ -86,10 +86,31 @@ The default easing is `Linear` which means the waves are not modified from left 
 Alternatively you can pass a function directly to the `ease` option when creating a SineWaves instance.
 
 ```js
-  // Example of the Linear function
+  // Example of
+  linear growth
   ease: function(percent, amplitude) {
-    return amplitude;
+    return amplitude * percent;
   },
+```
+
+## Wave Types
+In addition to the default Sine wave can also generate, `Square`, `Sawtooth`, and `Triangle` waves.
+
+```js
+  waves: [
+    {
+      type: 'Square'
+      segmentLength: 1, // The smaller the smoother
+    },
+    {
+      type: 'Sawtooth'
+      segmentLength: 1,
+    },
+    {
+      type: 'Triangle'
+      segmentLength: 1,
+    }
+  ],
 ```
 
 ## Examples on Codepen
@@ -100,5 +121,6 @@ Alternatively you can pass a function directly to the `ease` option when creatin
 ## License
 SineWaves is open-sourced software licensed under the MIT license
 
-## Release Histort
+## Release History
+- v0.2.0 - Added rotate, ease, wavesWidth and wave types options
 - v0.1.0 - Initial Release

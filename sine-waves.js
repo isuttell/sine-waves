@@ -149,7 +149,7 @@
     this.speed = this.options.speed;
 
     // Setup Easing
-    this.easeFn = this.getEaseFn(this.options.ease);
+    this.easeFn = getFn(Ease, this.options.ease, 'Linear');
 
     // Start the magic
     this.loop();
@@ -159,17 +159,19 @@
    * You can either directly specify a easing function, use a built in function
    * or default to the basic SineInOut
    *
-   * @param     {Mixed}    ease    String || Function
+   * @param     {Object}   obj     Object to search in
+   * @param     {Mixed}    name    String || Function
+   * @param     {String}   def     Default funciton
    *
    * @return    {Function}
    */
-  SineWaves.prototype.getEaseFn = function(ease) {
-    if (isType(ease, 'function')) {
-      return ease;
-    } else if (isType(ease, 'string') && isType(Ease[ease], 'function')) {
-      return Ease[ease];
+  var getFn = SineWaves.prototype.getFn = function(obj, name, def) {
+    if (isType(name, 'function')) {
+      return name;
+    } else if (isType(name, 'string') && isType(obj[name], 'function')) {
+      return obj[name];
     } else {
-      return Ease.Linear;
+      return obj[def];
     }
   };
 
@@ -226,7 +228,8 @@
     wavelength: 50,
     segmentLength: 10,
     lineWidth: 1,
-    strokeStyle: 'rgba(255, 255, 255, 0.2)'
+    strokeStyle: 'rgba(255, 255, 255, 0.2)',
+    type: 'Sine'
   };
 
   /**
@@ -336,7 +339,7 @@
     // Draw each line
     while (++index < length) {
       var timeModifier = this.waves[index].timeModifier || 1;
-      this.drawSine(time * timeModifier, this.waves[index]);
+      this.drawWave(time * timeModifier, this.waves[index]);
     }
 
     this.ctx.restore();
@@ -415,6 +418,65 @@
   };
 
   /**
+   * Holds the different types of waves
+   *
+   * @type    {Object}
+   */
+  var Waves = SineWaves.prototype.Waves = {};
+
+  /**
+   * Default Sine Waves
+   *
+   * @param    {Number}    x
+   */
+  SineWaves.prototype.Waves.Sine = function(x) {
+    return Math.sin(x);
+  };
+
+  /**
+   * Sign polyfill
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign
+   *
+   * @param     {Number}    x
+   *
+   * @return    {Number}
+   */
+  function sign(x) {
+    if (isType(Math.sign, 'function')) { return Math.sign(x); }
+
+    x = +x; // convert to a number
+    if (x === 0 || isNaN(x)) { return x; }
+    return x > 0 ? 1 : -1;
+  }
+
+  /**
+   * Square Waves
+   *
+   * @param    {Number}    x
+   */
+  SineWaves.prototype.Waves.Square = function(x) {
+    return sign(Math.sin(x * PI2));
+  };
+
+  /**
+   * Sawtooth Waves
+   *
+   * @param    {Number}    x
+   */
+  SineWaves.prototype.Waves.Sawtooth = function(x) {
+    return x - Math.floor(x + 0.5);
+  };
+
+  /**
+   * Triangle Waves
+   *
+   * @param    {Number}    x
+   */
+  SineWaves.prototype.Waves.Triangle = function(x) {
+    return Math.abs(Waves.Sawtooth(x));
+  };
+
+  /**
    * Calculate the x, y coordinates of a point in a sine wave
    *
    * @param  {Number} time     Internal time index
@@ -425,7 +487,7 @@
    */
   SineWaves.prototype.getPoint = function(time, position, options) {
     var x = (time * this.speed) + (-this.yAxis + position) / options.wavelength;
-    var y = Math.sin(x);
+    var y = options.waveFn(x);
 
     // Left and Right Sine Easing
     var amplitude = this.easeFn(position / this.waveWidth, options.amplitude);
@@ -474,9 +536,11 @@
    * @param  {Number} time    current internal clock time
    * @param  {Object} options wave options
    */
-  SineWaves.prototype.drawSine = function(time, options) {
+  SineWaves.prototype.drawWave = function(time, options) {
     // Setup defaults
     options = extend(this.defaultWave, options || {});
+
+    options.waveFn = getFn(Waves, options.type, 'Sine');
 
     // Styles
     this.ctx.lineWidth = options.lineWidth * this.dpr;
