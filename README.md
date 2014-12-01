@@ -4,7 +4,6 @@ Generator multiple configurable sine waves
 
 [![Build Status](http://img.shields.io/travis/isuttell/sine-waves.svg?style=flat)](https://travis-ci.org/isuttell/sine-waves)
 [![Coverage Status](https://img.shields.io/coveralls/isuttell/sine-waves.svg?style=flat)](https://coveralls.io/r/isuttell/sine-waves)
-[![Codacy Badge](https://www.codacy.com/project/badge/a52fd69032474c0ca88dc06ab69a9839)](https://www.codacy.com/public/isuttell/sine-waves)
 [![Dev Dependencies](http://img.shields.io/david/dev/isuttell/sine-waves.svg?style=flat)](https://david-dm.org/isuttell/sine-waves#info=devDependencies)
 [![Release](https://img.shields.io/bower/v/sine-waves.svg?style=flat)](https://github.com/isuttell/sine-waves/tarball/master)
 
