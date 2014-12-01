@@ -197,7 +197,8 @@
   SineWaves.prototype.options = {
     speed: 10,
     rotate: 0,
-    ease: 'Linear'
+    ease: 'Linear',
+    wavesWidth: '95%'
   };
 
   /**
@@ -227,6 +228,28 @@
     lineWidth: 1,
     strokeStyle: 'rgba(255, 255, 255, 0.2)'
   };
+
+  /**
+   * Takes either pixels or percents and calculates how wide the sine
+   * waves should be
+   *
+   * @param     {Mixed}    value    0, '10px', '90%'
+   * @param     {Number}   width    Width for percentages
+   *
+   * @return    {Number}
+   */
+  function getWaveWidth(value, width) {
+    if (isType(value, 'number')) { return value; }
+
+    value = value.toString();
+    if (value.indexOf('%') > -1) {
+      value = parseFloat(value);
+      if (value  > 1) { value /=  100; }
+      return width * value;
+    } else if (value.indexOf('px') > -1) {
+      return parseInt(value, 10);
+    }
+  }
 
   /**
    * Internal resize event to make the canvas fill the screen
@@ -262,8 +285,10 @@
     this.el.style.height = height + 'px';
 
     // Padding
-    this.waveWidth = this.width * 0.95;
-    this.waveLeft = this.width * 0.025;
+    this.waveWidth = getWaveWidth(this.options.wavesWidth, this.width);
+
+    // Center it
+    this.waveLeft = (this.width - this.waveWidth) / 2;
 
     // Vertical center
     this.yAxis = this.height / 2;

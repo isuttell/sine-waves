@@ -222,4 +222,45 @@ describe('sine-waves.js', function() {
     })
   });
 
+  describe('waveWidth and waveLeft', function(){
+    it('should calculate the width and left by percentage', function() {
+      var waves = new SineWaves({
+        el: element,
+        waves: [{}],
+        width: 100,
+        height: 100,
+        wavesWidth: '80%'
+      });
+      waves.updateDimensions();
+      expect(waves.waveWidth).toBe(80);
+      expect(waves.waveLeft).toBe(10);
+    });
+
+    it('should calculate the width and left by pixels', function() {
+      var waves = new SineWaves({
+        el: element,
+        waves: [{}],
+        width: 100,
+        height: 100,
+        wavesWidth: '70px'
+      });
+      waves.updateDimensions();
+      expect(waves.waveWidth).toBe(70);
+      expect(waves.waveLeft).toBe(15);
+    });
+
+    it('should calculate the width and left by a Number', function() {
+      var waves = new SineWaves({
+        el: element,
+        waves: [{}],
+        width: 100,
+        height: 100,
+        wavesWidth: 70
+      });
+      waves.updateDimensions();
+      expect(waves.waveWidth).toBe(70);
+      expect(waves.waveLeft).toBe(15);
+    });
+  });
+
 });
