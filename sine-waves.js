@@ -473,7 +473,7 @@
    * @param    {Number}    x
    */
   SineWaves.prototype.Waves.Sawtooth = function(x) {
-    return x - Math.floor(x + 0.5);
+    return (x - Math.floor(x + 0.5)) * 2;
   };
 
   /**

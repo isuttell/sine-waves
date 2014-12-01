@@ -287,9 +287,9 @@ describe('sine-waves.js', function() {
   describe('Waves.Sawtooth', function() {
     it('should calculate a square sine wave', function(){
       expect(SineWaves.prototype.Waves.Sawtooth(0)).toBeCloseTo(0);
-      expect(SineWaves.prototype.Waves.Sawtooth(0.25)).toBeCloseTo(0.25);
-      expect(SineWaves.prototype.Waves.Sawtooth(0.5)).toBeCloseTo(-0.5);
-      expect(SineWaves.prototype.Waves.Sawtooth(0.75)).toBeCloseTo(-0.25);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.25)).toBeCloseTo(0.5);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.5)).toBeCloseTo(-1);
+      expect(SineWaves.prototype.Waves.Sawtooth(0.75)).toBeCloseTo(-0.5);
       expect(SineWaves.prototype.Waves.Sawtooth(1)).toBeCloseTo(0);
     });
   });
@@ -297,9 +297,9 @@ describe('sine-waves.js', function() {
   describe('Waves.Triangle', function() {
     it('should calculate a square sine wave', function(){
       expect(SineWaves.prototype.Waves.Triangle(0)).toBeCloseTo(0);
-      expect(SineWaves.prototype.Waves.Triangle(0.25)).toBeCloseTo(0.25);
-      expect(SineWaves.prototype.Waves.Triangle(0.5)).toBeCloseTo(0.5);
-      expect(SineWaves.prototype.Waves.Triangle(0.75)).toBeCloseTo(0.25);
+      expect(SineWaves.prototype.Waves.Triangle(0.25)).toBeCloseTo(0.5);
+      expect(SineWaves.prototype.Waves.Triangle(0.5)).toBeCloseTo(1);
+      expect(SineWaves.prototype.Waves.Triangle(0.75)).toBeCloseTo(0.5);
       expect(SineWaves.prototype.Waves.Triangle(1)).toBeCloseTo(0);
     });
   });
