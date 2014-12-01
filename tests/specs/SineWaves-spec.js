@@ -143,4 +143,20 @@ describe('sine-waves.js', function() {
     });
   });
 
+  describe('degreesToRadians', function() {
+    it('should convert radians to degrees' , function() {
+      expect(SineWaves.prototype.degreesToRadians(0)).toBeCloseTo(0);
+      expect(SineWaves.prototype.degreesToRadians(90)).toBeCloseTo(Math.PI * 0.5);
+      expect(SineWaves.prototype.degreesToRadians(180)).toBeCloseTo(Math.PI);
+      expect(SineWaves.prototype.degreesToRadians(270)).toBeCloseTo(Math.PI * 1.5);
+      expect(SineWaves.prototype.degreesToRadians(360)).toBeCloseTo(Math.PI * 2);
+    });
+
+    it('should throw a TypeError if the input is not a number', function() {
+      expect(function() {
+        SineWaves.prototype.degreesToRadians({});
+      }).toThrow(new TypeError('Degrees is not a number'));
+    })
+  });
+
 });

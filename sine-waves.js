@@ -152,6 +152,9 @@
     this.loop();
   }
 
+  /**
+   * Sets up the user resize event and the initialize event
+   */
   SineWaves.prototype.setupUserFunctions = function() {
     // User Resize Function
     if (isType(this.options.resizeEvent, 'function')) {
@@ -171,7 +174,8 @@
    * @type {Object}
    */
   SineWaves.prototype.options = {
-    speed: 10
+    speed: 10,
+    rotate: 0
   };
 
   /**
@@ -273,11 +277,22 @@
     var index = -1;
     var length = this.waves.length;
 
+    this.ctx.save();
+
+    var rotation = this.rotation();
+    if (rotation > 0) {
+      this.ctx.translate(this.width / 2, this.height / 2);
+      this.ctx.rotate(this.rotation());
+      this.ctx.translate(-this.width / 2, -this.height / 2);
+    }
+
     // Draw each line
     while (++index < length) {
       var timeModifier = this.waves[index].timeModifier || 1;
       this.drawSine(time * timeModifier, this.waves[index]);
     }
+
+    this.ctx.restore();
 
     index = void 0;
     length = void 0;
@@ -335,6 +350,35 @@
       x: x,
       y: y
     };
+  };
+
+  /**
+   * For radian conversion
+   *
+   * @constant
+   * @type    {Number}
+   */
+  var PI180 = Math.PI / 180;
+
+  /**
+   * Convert degress to radians for rotation function
+   *
+   * @param     {Number}    degrees
+   *
+   * @return    {Number}
+   */
+  SineWaves.prototype.degreesToRadians = function(degrees) {
+    if (!isType(degrees, 'number')) { throw new TypeError('Degrees is not a number'); }
+    return degrees * PI180;
+  };
+
+  /**
+   * Returns in radians the amount to rotate all of the lines
+   *
+   * @return    {Number}
+   */
+  SineWaves.prototype.rotation = function() {
+    return this.degreesToRadians(this.options.rotate);
   };
 
   /**
