@@ -107,7 +107,8 @@
    *
    * @return    {Object}
    */
-  function extend(dest, src) {
+  function defaults(dest, src) {
+    if (!isType(src, 'object')) { src = {}; }
     for (var i in src) {
       if (src.hasOwnProperty(i)) {
         dest[i] = src[i];
@@ -123,20 +124,27 @@
    */
   function SineWaves(options) {
     // Save a reference
-    extend(this.options, options || {});
+    options = defaults(defaultOptions, options);
 
     // Make sure we have a cancas
-    this.el = this.options.el;
+    this.el = options.el;
     if (!this.el) { throw 'No Canvas Selected'; }
 
     // Setup the context for reference
     this.ctx = this.el.getContext('2d');
 
     // Do we have any waves
-    this.waves = this.options.waves;
+    this.waves = options.waves;
     if (!this.waves || !this.waves.length) { throw 'No waves specified'; }
 
     this.dpr = window.devicePixelRatio || 1;
+
+    this._width = options.width;
+    this._height = options.height;
+    this._wavesWidth = options.wavesWidth;
+
+    this.resizeEvent = options.resizeEvent;
+    this.initialize = options.initialize;
 
     // Setup canvas width/heights
     this.updateDimensions();
@@ -146,10 +154,13 @@
     this.setupUserFunctions();
 
     // Set the speed
-    this.speed = this.options.speed;
+    this.speed = options.speed;
 
     // Setup Easing
-    this.easeFn = getFn(Ease, this.options.ease, 'Linear');
+    this.easeFn = getFn(Ease, options.ease, 'Linear');
+
+    // Set the canvas rotation
+    this.rotation = degreesToRadians(options.rotate);
 
     // Start the magic
     this.loop();
@@ -180,14 +191,14 @@
    */
   SineWaves.prototype.setupUserFunctions = function() {
     // User Resize Function
-    if (isType(this.options.resizeEvent, 'function')) {
-      this.options.resizeEvent.call(this);
-      window.addEventListener('resize', this.options.resizeEvent.bind(this));
+    if (isType(this.resizeEvent, 'function')) {
+      this.resizeEvent.call(this);
+      window.addEventListener('resize', this.resizeEvent.bind(this));
     }
 
     // User initialize
-    if (isType(this.options.initialize, 'function')) {
-      this.options.initialize.call(this);
+    if (isType(this.initialize, 'function')) {
+      this.initialize.call(this);
     }
   };
 
@@ -196,7 +207,7 @@
    *
    * @type {Object}
    */
-  SineWaves.prototype.options = {
+  var defaultOptions = {
     speed: 10,
     rotate: 0,
     ease: 'Linear',
@@ -208,21 +219,21 @@
    *
    * @type {Array}
    */
-  SineWaves.prototype.waves = [];
+  // SineWaves.prototype.waves = [];
 
   /**
    * Default speed of all of the waves.
    *
    * @type {Number}
    */
-  SineWaves.prototype.speed = 10;
+  // SineWaves.prototype.speed = 10;
 
   /**
    * Defaults for each line created
    *
    * @type {Object}
    */
-  SineWaves.prototype.defaultWave = {
+  var defaultWave = {
     timeModifier: 1,
     amplitude: 50,
     wavelength: 50,
@@ -262,19 +273,19 @@
     var height;
 
     // Width
-    if (isType(this.options.width, 'number')) {
-      width = this.options.width;
-    } else if (isType(this.options.width, 'function')) {
-      width = this.options.width.call(this, this.el);
+    if (isType(this._width, 'number')) {
+      width = this._width;
+    } else if (isType(this._width, 'function')) {
+      width = this._width.call(this, this.el);
     } else {
       width = this.el.clientWidth;
     }
 
     // Height
-    if (isType(this.options.height, 'number')) {
-      height = this.options.height;
-    } else if (isType(this.options.height, 'function')) {
-      height = this.options.height.call(this, this.el);
+    if (isType(this._height, 'number')) {
+      height = this._height;
+    } else if (isType(this._height, 'function')) {
+      height = this._height.call(this, this.el);
     } else {
       height = this.el.clientHeight;
     }
@@ -288,7 +299,7 @@
     this.el.style.height = height + 'px';
 
     // Padding
-    this.waveWidth = getWaveWidth(this.options.wavesWidth, this.width);
+    this.waveWidth = getWaveWidth(this._wavesWidth, this.width);
 
     // Center it
     this.waveLeft = (this.width - this.waveWidth) / 2;
@@ -329,10 +340,9 @@
 
     this.ctx.save();
 
-    var rotation = this.rotation();
-    if (rotation > 0) {
+    if (this.rotation > 0) {
       this.ctx.translate(this.width / 2, this.height / 2);
-      this.ctx.rotate(this.rotation());
+      this.ctx.rotate(this.rotation);
       this.ctx.translate(-this.width / 2, -this.height / 2);
     }
 
@@ -341,7 +351,6 @@
       var timeModifier = this.waves[index].timeModifier || 1;
       this.drawWave(time * timeModifier, this.waves[index]);
     }
-
     this.ctx.restore();
 
     index = void 0;
@@ -516,18 +525,9 @@
    *
    * @return    {Number}
    */
-  SineWaves.prototype.degreesToRadians = function(degrees) {
+  var degreesToRadians = SineWaves.prototype.degreesToRadians = function(degrees) {
     if (!isType(degrees, 'number')) { throw new TypeError('Degrees is not a number'); }
     return degrees * PI180;
-  };
-
-  /**
-   * Returns in radians the amount to rotate all of the lines
-   *
-   * @return    {Number}
-   */
-  SineWaves.prototype.rotation = function() {
-    return this.degreesToRadians(this.options.rotate);
   };
 
   /**
@@ -538,14 +538,13 @@
    */
   SineWaves.prototype.drawWave = function(time, options) {
     // Setup defaults
-    options = extend(this.defaultWave, options || {});
-
+    options = defaults(defaultWave, options);
     options.waveFn = getFn(Waves, options.type, 'Sine');
 
     // Styles
     this.ctx.lineWidth = options.lineWidth * this.dpr;
     this.ctx.strokeStyle = options.strokeStyle;
-    this.ctx.lineCap = 'round';
+    this.ctx.lineCap = 'butt';
     this.ctx.lineJoin = 'round';
     this.ctx.beginPath();
 

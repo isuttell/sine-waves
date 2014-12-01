@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>SineWaves</title>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <style>
+        @import url(http://fonts.googleapis.com/css?family=Raleway:100,300);
+        body {
+          background-color: #222;
+          background-image: -moz-linear-gradient(top, #111111 0%, #222222 50%, #111111 100%);
+          background-image: -webkit-linear-gradient(top, #111111 0%, #222222 50%, #111111 100%);
+          background-image: linear-gradient(to bottom, #111111 0%, #222222 50%, #111111 100%);
+          font-family: 'Raleway', sans-serif;
+          font-weight: 100;
+          color: rgba(255, 255, 255, 0.5);
+          height: 100vh;
+          width: 100vw;
+          margin: 0;
+          padding: 0;
+        }
+
+        #waves {
+            width: 100%;
+            height: 100%;
+        }
+
+        #title {
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          font-size: 20px;
+          letter-spacing: 0.1em;
+          z-index: 100;
+          margin: 0;
+          padding: 0;
+          font-weight: 100;
+        }
+
+        #box {
+          position: absolute;
+          width: 300px;
+          height: 300px;
+          top: 50%;
+          left: 50%;
+          margin: 30px;
+          -webkit-transform: translateX(-180px) translateY(-180px);
+          -moz-transform: translateX(-180px) translateY(-180px);
+          transform: translateX(-180px) translateY(-180px);
+        }
+
+        .wave {
+          position: absolute;
+        }
+
+        #top-waves {
+            top: -150px;
+        }
+        #bottom-waves {
+            bottom: -150px;
+        }
+        #right-waves {
+            right: -150px;
+        }
+        #left-waves {
+            left: -150px;
+        }
+        </style>
+    </head>
+    <body>
+        <h1 id="title">SineWaves</h1>
+        <div id="box">
+          <canvas id="top-waves" class="wave"></canvas>
+          <canvas id="right-waves" class="wave"></canvas>
+          <canvas id="bottom-waves" class="wave"></canvas>
+          <canvas id="left-waves" class="wave"></canvas>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.underscore.js"></script>
+        <script src="../sine-waves.js"></script>
+        <script>
+        $(function(){
+
+          var width = 300;
+          var height = 300;
+          var amplitude = 20;
+          var speed = 1;
+          var ease = 'SineInOut';
+
+          var waves = [
+            {
+              timeModifer: 2,
+              lineWidth: 1,
+              amplitude: amplitude,
+              wavelength: 100,
+              segmentLength: 1,
+              strokeStyle: 'rgba(255, 255, 255, 0.3333)',
+              type: 'Sawtooth'
+            },
+            {
+              timeModifer: 2,
+              lineWidth: 1,
+              amplitude: -amplitude,
+              wavelength: 100,
+              segmentLength: 1,
+              strokeStyle: 'rgba(255, 255, 255, 0.3333)',
+              type: 'Sawtooth'
+            },
+            {
+              timeModifer: 2,
+              lineWidth: 1,
+              amplitude: -amplitude,
+              wavelength: 100,
+              segmentLength: 1,
+              strokeStyle: 'rgba(255, 255, 255, 0.3333)',
+              type: 'Square'
+            }
+          ];
+
+          new SineWaves({
+            el: document.getElementById('bottom-waves'),
+
+            speed: speed,
+            width: width,
+            height: height,
+            ease: ease,
+            waves: _.clone(waves, true),
+            rotate: 0,
+              resizeEvent: function() {
+                var gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
+                gradient.addColorStop(0,"rgba(0, 0, 0, 0)");
+                gradient.addColorStop(0.5,"rgba(255, 255, 255, 0.5)");
+                gradient.addColorStop(1,"rgba(0, 0, 0, 0)");
+
+                var index = -1;
+                var length = this.waves.length;
+                  while(++index < length){
+                  this.waves[index].strokeStyle = gradient;
+                }
+
+                // Clean Up
+                index = void 0;
+                length = void 0;
+                gradient = void 0;
+              }
+          });
+
+          new SineWaves({
+            el: document.getElementById('top-waves'),
+
+            speed: -speed,
+            width: width,
+            height: height,
+            ease: ease,
+            waves: _.clone(waves, true),
+            rotate: 0,
+              resizeEvent: function() {
+                var gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
+                gradient.addColorStop(0,"rgba(0, 0, 0, 0)");
+                gradient.addColorStop(0.5,"rgba(255, 255, 255, 0.5)");
+                gradient.addColorStop(1,"rgba(0, 0, 0, 0)");
+
+                var index = -1;
+                var length = this.waves.length;
+                  while(++index < length){
+                  this.waves[index].strokeStyle = gradient;
+                }
+
+                // Clean Up
+                index = void 0;
+                length = void 0;
+                gradient = void 0;
+              }
+          });
+
+          new SineWaves({
+            el: document.getElementById('left-waves'),
+
+            speed: speed,
+            width: height,
+            height: width,
+            ease: ease,
+            waves: _.clone(waves, true),
+            rotate: 90,
+              resizeEvent: function() {
+                var gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
+                gradient.addColorStop(0,"rgba(0, 0, 0, 0)");
+                gradient.addColorStop(0.5,"rgba(255, 255, 255, 0.5)");
+                gradient.addColorStop(1,"rgba(0, 0, 0, 0)");
+
+                var index = -1;
+                var length = this.waves.length;
+                  while(++index < length){
+                  this.waves[index].strokeStyle = gradient;
+                }
+
+                // Clean Up
+                index = void 0;
+                length = void 0;
+                gradient = void 0;
+              }
+          });
+
+          new SineWaves({
+            el: document.getElementById('right-waves'),
+
+            speed: -speed,
+            width: height,
+            height: width,
+            ease: ease,
+            waves: _.clone(waves, true),
+            rotate: 90,
+              resizeEvent: function() {
+                var gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
+                gradient.addColorStop(0,"rgba(0, 0, 0, 0)");
+                gradient.addColorStop(0.5,"rgba(255, 255, 255, 0.5)");
+                gradient.addColorStop(1,"rgba(0, 0, 0, 0)");
+
+                var index = -1;
+                var length = this.waves.length;
+                  while(++index < length){
+                  this.waves[index].strokeStyle = gradient;
+                }
+
+                // Clean Up
+                index = void 0;
+                length = void 0;
+                gradient = void 0;
+              }
+          });
+        });
+        </script>
+    </body>
+</html>

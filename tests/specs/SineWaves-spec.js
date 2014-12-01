@@ -60,11 +60,11 @@ describe('sine-waves.js', function() {
           return 100;
         }
       });
-      spyOn(waves.options, 'width').and.returnValue(100);
-      spyOn(waves.options, 'height').and.returnValue(100);
+      spyOn(waves, '_width').and.returnValue(100);
+      spyOn(waves, '_height').and.returnValue(100);
       waves.updateDimensions();
-      expect(waves.options.width).toHaveBeenCalled();
-      expect(waves.options.height).toHaveBeenCalled();
+      expect(waves._width).toHaveBeenCalled();
+      expect(waves._height).toHaveBeenCalled();
       expect(waves.width).toBe(100);
       expect(waves.height).toBe(100);
     });
@@ -219,7 +219,7 @@ describe('sine-waves.js', function() {
         height: 100,
         rotate: 180
       });
-      expect(waves.rotation()).toBe(Math.PI);
+      expect(waves.rotation).toBe(Math.PI);
     })
   });
 
