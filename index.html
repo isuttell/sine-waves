@@ -42,9 +42,14 @@
 <a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h2>
 
 <div class="highlight highlight-js"><pre><span class="pl-s">var</span> waves <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SineWaves</span>({
+
   el<span class="pl-k">:</span> <span class="pl-s3">document</span>.<span class="pl-s3">getElementById</span>(<span class="pl-s1"><span class="pl-pds">'</span>waves<span class="pl-pds">'</span></span>),
 
   speed<span class="pl-k">:</span> <span class="pl-c1">8</span>,
+
+  ease<span class="pl-k">:</span> <span class="pl-c1">'SineInOut'</span>,
+
+  waveWidth<span class="pl-k">:</span> <span class="pl-c1">'95%'</span>,
 
   waves<span class="pl-k">:</span> [
     {
@@ -87,6 +92,47 @@
 });</pre></div>
 
 <h2>
+<a id="easing" class="anchor" href="#easing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Easing</h2>
+
+<p>The default easing is <code>`Linear`</code> which means the waves are not modified from left to right. Additionally you can specify one of the following easing functions to the waves to modify the amplitude of each wave throughout the width of the canvas.</p>
+<p>
+<li><code>Linear</code></li>
+<li><code>SineIn</code></li>
+<li><code>SineOut</code></li>
+<li><code>SineInOut</code></li>
+</p>
+<p>Alternatively you can pass a function directly to the <code>ease</code> option when creating a SineWaves instance.</p>
+
+<div class="highlight highlight-js"><pre>
+  // Example of
+  linear growth
+  ease: function(percent, amplitude) {
+    return amplitude * percent;
+  },
+</pre></div>
+
+<h2>
+<a id="wave-types" class="anchor" href="#wave-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wave Types</h2>
+
+<p>In addition to the default Sine wave can also generate, <code>`Square`</code>, <code>`Sawtooth`</code>, and <code>`Triangle</code>` waves.</p>
+
+<div class="highlight highlight-js"><pre>
+  waves<span class="pl-k">:</span> [
+    {
+      type<span class="pl-k">:</span> <span class="pl-c1">'Square'</span>,
+      segmentLength<span class="pl-k">:</span> <span class="pl-c1">1</span> // The smaller the smoother
+    },
+    {
+      type<span class="pl-k">:</span> <span class="pl-c1">'Sawtooth'</span>,
+      segmentLength<span class="pl-k">:</span> <span class="pl-c1">1</span>
+    },
+    {
+      type<span class="pl-k">:</span> <span class="pl-c1">'Triangle'</span>,
+      segmentLength<span class="pl-k">:</span> <span class="pl-c1">1</span>
+    }
+  ],
+</pre></div>
+<h2>
 <a id="examples-on-codepen" class="anchor" href="#examples-on-codepen" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples on Codepen</h2>
 
 <ul>
@@ -104,7 +150,8 @@
 <a id="release-histort" class="anchor" href="#release-histort" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release Histort</h2>
 
 <ul>
-<li>v0.1.0 - Initial Release</li>
+<li>v0.2.0-alpha - Added rotate, ease, wavesWidth and wave types options</li>
+<li>v0.1.0-alpha - Initial Release</li>
 </ul>
       </section>
       <footer>
@@ -113,6 +160,6 @@
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
   </body>
 </html>
