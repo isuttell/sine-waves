@@ -362,6 +362,11 @@
     length = void 0;
   };
 
+  /**
+   * This holds all of the easing objects and can be added to by the user
+   *
+   * @type    {Object}
+   */
   var Ease = SineWaves.prototype.Ease = {};
 
   /**
