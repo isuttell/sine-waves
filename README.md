@@ -117,6 +117,8 @@ In addition to the default Sine wave can also generate, `Square`, `Sawtooth`, an
 
 * [The Basics](http://codepen.io/isuttell/pen/vENOZw)
 * [Animated Borders](http://codepen.io/isuttell/pen/PwPqOw)
+* [Rotate](http://codepen.io/isuttell/pen/xbwrxB)
+* [Alternative Wave Types](http://codepen.io/isuttell/pen/MYaoKX)
 
 ## License
 SineWaves is open-sourced software licensed under the MIT license
