@@ -1,6 +1,6 @@
 {
   "name": "sine-waves",
-  "version": "v0.2.0-alpha",
+  "version": "v0.2.1-alpha",
   "description": "Generate multiple configurable sine waves",
   "homepage": "https://github.com/isuttell/sine-waves",
   "repository": {
@@ -19,10 +19,11 @@
     "coveralls": "^2.11.2",
     "grunt-asciify": "^0.2.2",
     "grunt-cli": "~0.1.13",
+    "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.6.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-flow-type-check": "~0.2.1",
+    "grunt-flow-type-check": "^0.3.0",
     "grunt-jscs": "^1.0.0",
     "grunt-jsvalidate": "^0.2.2",
     "grunt-karma": "~0.9.0",

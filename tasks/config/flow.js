@@ -12,17 +12,21 @@ module.exports = function(grunt) {
 
   grunt.config.set('flow', {
     options: {
-      configFile: '.'
+      lib: './lib'
     },
     single: {
       options: {
         background: false,
-      }
+        stripRoot: true,
+        profile: true
+      },
+      src: '.'
     },
     watch: {
       options: {
         background: true
-      }
+      },
+      src: '.'
     }
   });
 

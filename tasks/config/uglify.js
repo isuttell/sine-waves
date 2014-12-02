@@ -14,11 +14,9 @@ module.exports = function(grunt) {
   grunt.config.set('uglify', {
     src: {
       options: {
-        banner: '/*!\n<%= asciify_title %> ' + pkg.name + ' ' + pkg.version + ' <' + pkg.homepage + '>\n Contributor(s): ' + pkg.contributors + '\n Last Build: ' + grunt.template.today("yyyy-mm-dd") + '\n*/\n',
-        report: 'min',
-        mangle: {
-          except: ['SineWaves']
-        }
+        banner: '/*!\n<%= asciify_title %> ' + pkg.name + ' ' + pkg.version + ' <' + pkg.homepage + '>' +
+          '\n Contributor(s): ' + pkg.contributors + '\n Last Build: ' + grunt.template.today('yyyy-mm-dd') + '\n*/\n',
+        report: 'min'
       },
       files: {
         'sine-waves.min.js': ['sine-waves.js']

@@ -11,10 +11,7 @@ module.exports = function(grunt) {
   grunt.config.set('karma', {
     options: {
       configFile: 'tests/karma.conf.js',
-      separator: '',
-      preprocessors: {
-        'sine-waves.js': 'coverage'
-      },
+      separator: ''
     },
     single: {
       options: {

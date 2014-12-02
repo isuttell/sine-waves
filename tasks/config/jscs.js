@@ -14,11 +14,21 @@ module.exports = function(grunt) {
 
   grunt.config.set('jscs', {
     options: {
-      config: ".jscsrc"
+      config: '.jscsrc'
     },
     src: {
       files: {
-        src: ["sine-waves.js"]
+        src: ['src/**/*.js', '!src/lib/amd.js']
+      }
+    },
+    specs: {
+      files : {
+        src: ['tests/specs/**/*.js']
+      }
+    },
+    tasks: {
+      files : {
+        src: ['tasks/**/*.js']
       }
     }
   });

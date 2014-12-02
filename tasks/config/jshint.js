@@ -18,7 +18,22 @@ module.exports = function(grunt) {
     },
     src: {
       files: {
+        src: ['src/**/*.js', '!src/lib/amd.js']
+      }
+    },
+    build: {
+      files: {
         src: ['sine-waves.js']
+      }
+    },
+    specs: {
+      files : {
+        src: ['tests/specs/**/*.js']
+      }
+    },
+    tasks: {
+      files : {
+        src: ['tasks/**/*.js']
       }
     }
   });

@@ -7,9 +7,18 @@ module.exports = function(config) {
 
     files: [
       'tests/vendor/**/*.js',
-      'sine-waves.js',
+      'src/lib/polyfills.js',
+      'src/constants.js',
+      'src/utilities.js',
+      'src/ease.js',
+      'src/waves.js',
+      'src/sine-waves.js',
       'tests/specs/**/*.js',
     ],
+
+    preprocessors: {
+      'src/*.js': ['coverage'],
+    },
 
     autoWatch: false,
 

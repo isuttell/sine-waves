@@ -19,9 +19,19 @@ module.exports = function(grunt) {
     },
 
     src: {
-      files: ['sine-waves.js', 'tests/specs/**/*.js'],
-      tasks: ['karma:watch:run', 'jshint', 'jscs', 'flow:watch:status']
-    }
+      files: ['src/**/*.js', 'tests/specs/**/*.js'],
+      tasks: ['karma:watch:run', 'jshint:src', 'jscs:src', 'flow:watch:status', 'concat']
+    },
+
+    grunt: {
+      // Grunt Files
+      files: ['Gruntfile.js', 'tasks/**/*.js'],
+
+      // Automatically reload Grunt configuration
+      options: {
+        reload: true
+      }
+    },
 
   });
 
