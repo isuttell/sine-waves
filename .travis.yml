@@ -1,5 +1,9 @@
 language: node_js
 node_js:
   - 0.10
+addons:
+  code_climate:
+    repo_token: 58d0f019f30c83624aa7374d89677fa9d552ff0858eb24c6644fbaeca1ca92f6
 after_script:
   - NODE_ENV=test cat ./tests/coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./tests/coverage/lcov/lcov.info | ./node_modules/codeclimate-test-reporter/bin/codeclimate.js
