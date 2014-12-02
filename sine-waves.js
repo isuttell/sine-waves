@@ -162,6 +162,8 @@
     // Set the canvas rotation
     this.rotation = degreesToRadians(options.rotate);
 
+    if (isType(options.running, 'boolean')) { this.running = options.running; }
+
     // Start the magic
     this.loop();
   }
@@ -337,6 +339,9 @@
 
     var index = -1;
     var length = this.waves.length;
+
+    // Clear Canvas
+    this.clear();
 
     this.ctx.save();
 
@@ -583,7 +588,6 @@
    */
   SineWaves.prototype.loop = function() {
     if (this.running === true) {
-      this.clear();
       this.update();
     }
 

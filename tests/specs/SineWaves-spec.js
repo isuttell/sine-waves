@@ -49,6 +49,15 @@ describe('sine-waves.js', function() {
       expect(called).toBe(true);
     });
 
+    it('should accept the `running` option', function() {
+      var waves = new SineWaves({
+        el: element,
+        waves: [{}],
+        running: false
+      });
+      expect(waves.running).toBe(false);
+    });
+
     it('should accept a function for width/height', function (){
       var waves = new SineWaves({
         el: element,

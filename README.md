@@ -53,9 +53,7 @@ var waves = new SineWaves({
   ],
 
   // Perform any additional initializations here
-  initialize: function (){
-
-  },
+  initialize: function (){},
 
   // This function is called whenver the window is resized
   resizeEvent: function() {
@@ -119,6 +117,26 @@ In addition to the default Sine wave can also generate, `Square`, `Sawtooth`, an
 * [Animated Borders](http://codepen.io/isuttell/pen/PwPqOw)
 * [Rotate](http://codepen.io/isuttell/pen/xbwrxB)
 * [Alternative Wave Types](http://codepen.io/isuttell/pen/MYaoKX)
+
+## Mobile
+Canvas is supported on most devices however the due limited processing power complex animations may appear choppy. You can either create simplier animations for mobile or disable the animation by setting the `running` property to `false`. Running the `update()` method will update the animation one frame while paused.
+
+```js
+var waves = new SineWaves({
+  // Canvas Element
+  el: document.getElementById('waves'),
+
+  running: false,
+
+  waves: [{}]
+});
+
+// or
+waves.running = false;
+
+// And then update the animation one frame
+waves.update();
+```
 
 ## License
 SineWaves is open-sourced software licensed under the MIT license
