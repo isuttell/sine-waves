@@ -564,13 +564,19 @@
     var point;
 
     for (i = 0; i < this.waveWidth; i += options.segmentLength) {
+      // Calculate where the next point is
       point = this.getPoint(time, i, options);
 
+      // Draw to it
       this.ctx.lineTo(point.x, point.y);
+
+      // Clean up
       point = void 0;
     }
 
+    // Clean  up
     i = void 0;
+    options = void 0;
 
     // Ending Line
     this.ctx.lineTo(this.width, this.yAxis);
