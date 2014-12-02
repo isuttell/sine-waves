@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 /*
  _______ _____ __   _ _______      _  _  _ _______ _    _ _______ _______
  |______   |   | \  | |______      |  |  | |_____|  \  /  |______ |______
@@ -461,8 +461,6 @@
    * @return    {Number}
    */
   function sign(x) {
-    if (isType(Math.sign, 'function')) { return Math.sign(x); }
-
     x = +x; // convert to a number
     if (x === 0 || isNaN(x)) { return x; }
     return x > 0 ? 1 : -1;
