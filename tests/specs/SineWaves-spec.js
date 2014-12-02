@@ -13,7 +13,7 @@ describe('sine-waves.js', function() {
 
     it('should throw an error if no element is supplied', function (){
       expect(function(){
-        new SineWaves({});
+        new SineWaves();
       }).toThrow('No Canvas Selected');
     });
 
@@ -29,7 +29,8 @@ describe('sine-waves.js', function() {
       var called = false;
       var waves = new SineWaves({
         el: element,
-        waves: [{}],
+        width: 100,
+        waves: [{}, {}],
         initialize: function() {
           called = true;
         }
@@ -88,6 +89,7 @@ describe('sine-waves.js', function() {
       waves.updateDimensions();
       expect(waves.width).toBe(100);
       expect(waves.height).toBe(100);
+      console.log(waves.wavesWidth);
     });
 
 
@@ -228,6 +230,7 @@ describe('sine-waves.js', function() {
         height: 100,
         rotate: 180
       });
+      waves.update();
       expect(waves.rotation).toBe(Math.PI);
     })
   });
