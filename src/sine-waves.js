@@ -48,7 +48,7 @@ function SineWaves(options) {
   this.speed = options.speed;
 
   // Setup Easing
-  this.easeFn = Utilities.getFn(Ease, options.ease, 'Linear');
+  this.easeFn = Utilities.getFn(Ease, options.ease, 'linear');
 
   // Set the canvas rotation
   this.rotation = Utilities.degreesToRadians(options.rotate);
@@ -250,10 +250,10 @@ SineWaves.prototype.update = function(time) {
  */
 SineWaves.prototype.getPoint = function(time, position, options) {
   var x = (time * this.speed) + (-this.yAxis + position) / options.wavelength;
-  var y = options.waveFn(x);
+  var y = options.waveFn.call(this, x, Waves);
 
   // Left and Right Sine Easing
-  var amplitude = this.easeFn(position / this.waveWidth, options.amplitude);
+  var amplitude = this.easeFn.call(this, position / this.waveWidth, options.amplitude);
 
   x = position + this.waveLeft;
   y = amplitude * y + this.yAxis;
@@ -273,7 +273,7 @@ SineWaves.prototype.getPoint = function(time, position, options) {
 SineWaves.prototype.drawWave = function(time, options) {
   // Setup defaults
   options = Utilities.defaults(defaultWave, options);
-  options.waveFn = Utilities.getFn(Waves, options.type, 'Sine');
+  options.waveFn = Utilities.getFn(Waves, options.type, 'sine');
 
   // Styles
   this.ctx.lineWidth = options.lineWidth * this.dpr;

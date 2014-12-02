@@ -111,6 +111,32 @@ In addition to the default Sine wave can also generate, `Square`, `Sawtooth`, an
   ],
 ```
 
+## Custom Waves
+You can also specify your own wave function by supplying a function to the type parameter. This function has two arguments: `x` and `waves`. `x` is the location of a point on the x axis and `waves` a helper object with the following functions in it:
+
+* `waves.sine(x)`
+* `waves.sign(x)`
+* `waves.square(x)`
+* `waves.sawtooth(x)`
+* `waves.triangle(x)`
+
+```js
+  waves: [
+    {
+      timeModifier: 1,
+      lineWidth: 2,
+      amplitude: 150,
+      wavelength: 200,
+      segmentLength: 10,
+      strokeStyle: 'rgba(255, 255, 255, 0.5)',
+      type: function(x, waves) {
+        return Math.sin(x) * waves.sawtooth(x); // Combine two together
+      }
+    },
+    // Additional waves
+  ],
+```
+
 ## Examples on Codepen
 
 * [The Basics](http://codepen.io/isuttell/pen/vENOZw)
@@ -142,5 +168,6 @@ waves.update();
 SineWaves is open-sourced software licensed under the MIT license
 
 ## Release History
+- v0.3.0 - Refactor and added custom waves
 - v0.2.0-alpha - Added rotate, ease, wavesWidth and wave types options
 - v0.1.0-alpha - Initial Release

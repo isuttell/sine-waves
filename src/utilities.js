@@ -24,6 +24,30 @@ var isType = Utilities.isType = function(obj, type) {
 };
 
 /**
+ * Checks to see if a var is a function
+ *
+ * @alias  isType
+ * @param  {Mixed}  fn  var to check
+ *
+ * @return {Boolean}
+ */
+var isFunction = Utilities.isFunction = function(fn) {
+  return isType(fn, 'function');
+};
+
+/**
+ * Checks to see if a var is a string
+ *
+ * @alias  isType
+ * @param  {Mixed}  str  var to check
+ *
+ * @return {Boolean}
+ */
+var isString = Utilities.isString = function(str) {
+  return isType(str, 'string');
+};
+
+/**
  * Basic Extend Function
  *
  * @param     {Object}    dest   object to fill
@@ -68,10 +92,10 @@ var degreesToRadians = Utilities.degreesToRadians = function(degrees) {
  * @return    {Function}
  */
 var getFn = Utilities.getFn = function(obj, name, def) {
-  if (isType(name, 'function')) {
+  if (isFunction(name)) {
     return name;
-  } else if (isType(name, 'string') && isType(obj[name], 'function')) {
-    return obj[name];
+  } else if (isString(name) && isFunction(obj[name.toLowerCase()])) {
+    return obj[name.toLowerCase()];
   } else {
     return obj[def];
   }

@@ -19,7 +19,7 @@ var Ease = {};
  *
  * @return {Number}           the new strength
  */
-Ease.Linear = function(percent, amplitude) {
+Ease.linear = function(percent, amplitude) {
   return amplitude;
 };
 
@@ -32,7 +32,7 @@ Ease.Linear = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.SineIn = function(percent, amplitude) {
+Ease.sinein = function(percent, amplitude) {
   return amplitude * (Math.sin(percent * Math.PI - HALFPI) + 1) * 0.5;
 };
 
@@ -45,7 +45,7 @@ Ease.SineIn = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.SineOut = function(percent, amplitude) {
+Ease.sineout = function(percent, amplitude) {
   return amplitude * (Math.sin(percent * Math.PI + HALFPI) + 1) * 0.5;
 };
 
@@ -58,6 +58,6 @@ Ease.SineOut = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.SineInOut = function(percent, amplitude) {
+Ease.sineinout = function(percent, amplitude) {
   return amplitude * (Math.sin(percent * PI2 - HALFPI) + 1) * 0.5;
 };

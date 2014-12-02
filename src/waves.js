@@ -16,9 +16,17 @@ var Waves = {};
  *
  * @param    {Number}    x
  */
-Waves.Sine = function(x) {
+Waves.sine = function(x) {
   return Math.sin(x);
 };
+
+/**
+ * Alias for Sine
+ *
+ * @alias
+ * @type    {Function}
+ */
+Waves.sin = Waves.sine;
 
 /**
  * Sign polyfill
@@ -28,21 +36,21 @@ Waves.Sine = function(x) {
  *
  * @return    {Number}
  */
-function sign(x) {
+Waves.sign = function(x) {
   x = +x; // convert to a number
   if (x === 0 || isNaN(x)) {
     return x;
   }
   return x > 0 ? 1 : -1;
-}
+};
 
 /**
  * Square Waves
  *
  * @param    {Number}    x
  */
-Waves.Square = function(x) {
-  return sign(Math.sin(x * PI2));
+Waves.square = function(x) {
+  return Waves.sign(Math.sin(x * PI2));
 };
 
 /**
@@ -50,7 +58,7 @@ Waves.Square = function(x) {
  *
  * @param    {Number}    x
  */
-Waves.Sawtooth = function(x) {
+Waves.sawtooth = function(x) {
   return (x - Math.floor(x + 0.5)) * 2;
 };
 
@@ -59,6 +67,6 @@ Waves.Sawtooth = function(x) {
  *
  * @param    {Number}    x
  */
-Waves.Triangle = function(x) {
-  return Math.abs(Waves.Sawtooth(x));
+Waves.triangle = function(x) {
+  return Math.abs(Waves.sawtooth(x));
 };

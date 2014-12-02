@@ -41,7 +41,7 @@
         </style>
     </head>
     <body>
-        <h1 id="title">SineWaves</h1>
+        <h1 id="title">Custom SineWaves</h1>
         <canvas id="waves"></canvas>
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="../sine-waves.js"></script>
@@ -60,32 +60,28 @@
                 return $(window).height();
               },
 
-              wavesWidth: '95%',
-
               ease: 'SineInOut',
 
               waves: [
                 {
                   timeModifier: 1,
-                  lineWidth: 3,
+                  lineWidth: 2,
                   amplitude: 150,
-                  wavelength: 200,
+                  wavelength: 100,
                   segmentLength: 1,
-                  type: 'Fibonacci',
+                  type: 'sine',
                 },
                 {
                   timeModifier: 1,
                   lineWidth: 2,
-                  amplitude: -75,
+                  amplitude: 150,
                   wavelength: 100,
                   segmentLength: 1,
-                  type: 'Fibonacci',
+                  type: function(x, waves) {
+                    return Math.sin(x) * waves.sawtooth(x);
+                  },
                 }
               ],
-
-              initialize: function (){
-
-              },
 
               resizeEvent: function() {
                 var gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);

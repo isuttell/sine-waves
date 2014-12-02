@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
     src: {
       files: ['src/**/*.js', 'tests/specs/**/*.js'],
-      tasks: ['karma:watch:run', 'jshint:src', 'jscs:src', 'flow:watch:status', 'concat']
+      tasks: ['concat', 'karma:watch:run', 'jshint:src', 'jscs:src', 'flow:watch:status']
     },
 
     grunt: {
