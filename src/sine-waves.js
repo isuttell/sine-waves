@@ -5,18 +5,6 @@
  ************************************************/
 
 /**
- * Default Options
- *
- * @type {Object}
- */
-SineWaves.prototype.options = {
-  speed: 10,
-  rotate: 0,
-  ease: 'Linear',
-  wavesWidth: '95%'
-};
-
-/**
  * Generates multiple customizable animated sines waves
  * using a canvas element. Supports retina displays and
  * limited mobile support
@@ -69,6 +57,18 @@ function SineWaves(options) {
   // Start the magic
   this.loop();
 }
+
+/**
+ * Default Options
+ *
+ * @type {Object}
+ */
+SineWaves.prototype.options = {
+  speed: 10,
+  rotate: 0,
+  ease: 'Linear',
+  wavesWidth: '95%'
+};
 
 /**
  * Get the user wave function or one of the built in functions

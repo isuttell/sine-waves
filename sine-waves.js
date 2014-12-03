@@ -181,6 +181,23 @@ var isNumber = Utilities.isNumber = function(num) {
 };
 
 /**
+ * Create a clone of an object
+ *
+ * @param  {Object} src Object to clone
+ *
+ * @return {Object}
+ */
+var shallowClone = Utilities.shallowClone = function(src) {
+  var dest = {};
+  for (var i in src) {
+    if (src.hasOwnProperty(i)) {
+      dest[i] = src[i];
+    }
+  }
+  return dest;
+};
+
+/**
  * Basic Extend Function
  *
  * @param     {Object}    dest   object to fill
@@ -197,23 +214,6 @@ var defaults = Utilities.defaults = function(dest, src) {
     }
   }
   return clone;
-};
-
-/**
- * Create a clone of an object
- *
- * @param  {Object} src Object to clone
- *
- * @return {Object}
- */
-var shallowClone = Utilities.shallowClone = function(src) {
-  var dest = {};
-  for (var i in src) {
-    if (src.hasOwnProperty(i)) {
-      dest[i] = src[i];
-    }
-  }
-  return dest;
 };
 
 /**
@@ -391,18 +391,6 @@ Waves.triangle = function(x) {
  ************************************************/
 
 /**
- * Default Options
- *
- * @type {Object}
- */
-SineWaves.prototype.options = {
-  speed: 10,
-  rotate: 0,
-  ease: 'Linear',
-  wavesWidth: '95%'
-};
-
-/**
  * Generates multiple customizable animated sines waves
  * using a canvas element. Supports retina displays and
  * limited mobile support
@@ -455,6 +443,18 @@ function SineWaves(options) {
   // Start the magic
   this.loop();
 }
+
+/**
+ * Default Options
+ *
+ * @type {Object}
+ */
+SineWaves.prototype.options = {
+  speed: 10,
+  rotate: 0,
+  ease: 'Linear',
+  wavesWidth: '95%'
+};
 
 /**
  * Get the user wave function or one of the built in functions

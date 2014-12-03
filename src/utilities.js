@@ -60,6 +60,23 @@ var isNumber = Utilities.isNumber = function(num) {
 };
 
 /**
+ * Create a clone of an object
+ *
+ * @param  {Object} src Object to clone
+ *
+ * @return {Object}
+ */
+var shallowClone = Utilities.shallowClone = function(src) {
+  var dest = {};
+  for (var i in src) {
+    if (src.hasOwnProperty(i)) {
+      dest[i] = src[i];
+    }
+  }
+  return dest;
+};
+
+/**
  * Basic Extend Function
  *
  * @param     {Object}    dest   object to fill
@@ -76,23 +93,6 @@ var defaults = Utilities.defaults = function(dest, src) {
     }
   }
   return clone;
-};
-
-/**
- * Create a clone of an object
- *
- * @param  {Object} src Object to clone
- *
- * @return {Object}
- */
-var shallowClone = Utilities.shallowClone = function(src) {
-  var dest = {};
-  for (var i in src) {
-    if (src.hasOwnProperty(i)) {
-      dest[i] = src[i];
-    }
-  }
-  return dest;
 };
 
 /**
