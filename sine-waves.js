@@ -189,9 +189,25 @@ var isNumber = Utilities.isNumber = function(num) {
  * @return    {Object}
  */
 var defaults = Utilities.defaults = function(dest, src) {
-  if (!isType(src, 'object')) {
-    src = {};
+  if (!isType(src, 'object')) { src = {}; }
+  var clone = shallowClone(dest);
+  for (var i in src) {
+    if (src.hasOwnProperty(i)) {
+      clone[i] = src[i];
+    }
   }
+  return clone;
+};
+
+/**
+ * Create a clone of an object
+ *
+ * @param  {Object} src Object to clone
+ *
+ * @return {Object}
+ */
+var shallowClone = Utilities.shallowClone = function(src) {
+  var dest = {};
   for (var i in src) {
     if (src.hasOwnProperty(i)) {
       dest[i] = src[i];
@@ -379,7 +395,7 @@ Waves.triangle = function(x) {
  *
  * @type {Object}
  */
-var defaultOptions = {
+SineWaves.prototype.options = {
   speed: 10,
   rotate: 0,
   ease: 'Linear',
@@ -393,10 +409,10 @@ var defaultOptions = {
  */
 function SineWaves(options) {
   // Save a reference
-  options = Utilities.defaults(defaultOptions, options);
+  this.options = Utilities.defaults(this.options, options);
 
   // Make sure we have a cancas
-  this.el = options.el;
+  this.el = this.options.el;
   if (!this.el) {
     throw 'No Canvas Selected';
   }
@@ -410,14 +426,8 @@ function SineWaves(options) {
     throw 'No waves specified';
   }
 
+  // DPI
   this.dpr = window.devicePixelRatio || 1;
-
-  this._width = options.width;
-  this._height = options.height;
-  this._wavesWidth = options.wavesWidth;
-
-  this.resizeEvent = options.resizeEvent;
-  this.initialize = options.initialize;
 
   // Setup canvas width/heights
   this.updateDimensions();
@@ -426,20 +436,19 @@ function SineWaves(options) {
   // If the user supplied a resize event or init call it
   this.setupUserFunctions();
 
-  // Set the speed
-  this.speed = options.speed;
-
   // Setup Easing
-  this.easeFn = Utilities.getFn(Ease, options.ease, 'linear');
+  this.easeFn = Utilities.getFn(Ease, this.options.ease, 'linear');
 
   // Set the canvas rotation
-  this.rotation = Utilities.degreesToRadians(options.rotate);
+  this.rotation = Utilities.degreesToRadians(this.options.rotate);
 
-  if (Utilities.isType(options.running, 'boolean')) {
-    this.running = options.running;
+  // Should we start running?
+  if (Utilities.isType(this.options.running, 'boolean')) {
+    this.running = this.options.running;
   }
 
-  this.setupWaveFn();
+  // Assign wave functions
+  this.setupWaveFns();
 
   // Start the magic
   this.loop();
@@ -448,7 +457,7 @@ function SineWaves(options) {
 /**
  * Get the user wave function or one of the built in functions
  */
-SineWaves.prototype.setupWaveFn = function() {
+SineWaves.prototype.setupWaveFns = function() {
   var index = -1;
   var length = this.waves.length;
   while (++index < length) {
@@ -461,30 +470,16 @@ SineWaves.prototype.setupWaveFn = function() {
  */
 SineWaves.prototype.setupUserFunctions = function() {
   // User Resize Function
-  if (Utilities.isType(this.resizeEvent, 'function')) {
-    this.resizeEvent.call(this);
-    window.addEventListener('resize', this.resizeEvent.bind(this));
+  if (Utilities.isType(this.options.resizeEvent, 'function')) {
+    this.options.resizeEvent.call(this);
+    window.addEventListener('resize', this.options.resizeEvent.bind(this));
   }
 
   // User initialize
-  if (Utilities.isType(this.initialize, 'function')) {
-    this.initialize.call(this);
+  if (Utilities.isType(this.options.initialize, 'function')) {
+    this.options.initialize.call(this);
   }
 };
-
-/**
- * This stores each wave and is filled by the user
- *
- * @type {Array}
- */
-// SineWaves.prototype.waves = [];
-
-/**
- * Default speed of all of the waves.
- *
- * @type {Number}
- */
-// SineWaves.prototype.speed = 10;
 
 /**
  * Defaults for each line created
@@ -536,13 +531,13 @@ function getWaveWidth(value, width) {
  * @return   {Number}
  */
 SineWaves.prototype.getDimension = function(dimension) {
-  if (Utilities.isNumber(this[dimension])) {
-    return this[dimension];
-  } else if (Utilities.isFunction(this[dimension])) {
-    return this[dimension].call(this, this.el);
-  } else if (dimension === '_width') {
+  if (Utilities.isNumber(this.options[dimension])) {
+    return this.options[dimension];
+  } else if (Utilities.isFunction(this.options[dimension])) {
+    return this.options[dimension].call(this, this.el);
+  } else if (dimension === 'width') {
     return this.el.clientWidth;
-  } else if (dimension === '_height') {
+  } else if (dimension === 'height') {
     return this.el.clientHeight;
   }
 };
@@ -552,8 +547,8 @@ SineWaves.prototype.getDimension = function(dimension) {
  */
 SineWaves.prototype.updateDimensions = function() {
   // Dimensions
-  var width = this.getDimension('_width');
-  var height = this.getDimension('_height');
+  var width = this.getDimension('width');
+  var height = this.getDimension('height');
 
   // Apply DPR for retina devices
   this.width = this.el.width = width * this.dpr;
@@ -564,7 +559,7 @@ SineWaves.prototype.updateDimensions = function() {
   this.el.style.height = height + 'px';
 
   // Padding
-  this.waveWidth = getWaveWidth(this._wavesWidth, this.width);
+  this.waveWidth = getWaveWidth(this.options.wavesWidth, this.width);
 
   // Center it
   this.waveLeft = (this.width - this.waveWidth) / 2;
@@ -635,7 +630,7 @@ SineWaves.prototype.update = function(time) {
  * @return {Object}          {x, y}
  */
 SineWaves.prototype.getPoint = function(time, position, options) {
-  var x = (time * this.speed) + (-this.yAxis + position) / options.wavelength;
+  var x = (time * this.options.speed) + (-this.yAxis + position) / options.wavelength;
   var y = options.waveFn.call(this, x, Waves);
 
   // Left and Right Sine Easing

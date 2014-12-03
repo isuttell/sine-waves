@@ -68,9 +68,25 @@ var isNumber = Utilities.isNumber = function(num) {
  * @return    {Object}
  */
 var defaults = Utilities.defaults = function(dest, src) {
-  if (!isType(src, 'object')) {
-    src = {};
+  if (!isType(src, 'object')) { src = {}; }
+  var clone = shallowClone(dest);
+  for (var i in src) {
+    if (src.hasOwnProperty(i)) {
+      clone[i] = src[i];
+    }
   }
+  return clone;
+};
+
+/**
+ * Create a clone of an object
+ *
+ * @param  {Object} src Object to clone
+ *
+ * @return {Object}
+ */
+var shallowClone = Utilities.shallowClone = function(src) {
+  var dest = {};
   for (var i in src) {
     if (src.hasOwnProperty(i)) {
       dest[i] = src[i];
