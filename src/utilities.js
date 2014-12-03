@@ -48,6 +48,18 @@ var isString = Utilities.isString = function(str) {
 };
 
 /**
+ * Checks to see if a var is a number
+ *
+ * @alias  isType
+ * @param  {Mixed}  num  var to check
+ *
+ * @return {Boolean}
+ */
+var isNumber = Utilities.isNumber = function(num) {
+  return isType(num, 'number');
+};
+
+/**
  * Basic Extend Function
  *
  * @param     {Object}    dest   object to fill

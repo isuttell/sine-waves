@@ -5,6 +5,18 @@
  ************************************************/
 
 /**
+ * Default Options
+ *
+ * @type {Object}
+ */
+var defaultOptions = {
+  speed: 10,
+  rotate: 0,
+  ease: 'Linear',
+  wavesWidth: '95%'
+};
+
+/**
  * Generates multiple customizable animated sines waves
  * using a canvas element. Supports retina displays and
  * limited mobile support
@@ -78,18 +90,6 @@ SineWaves.prototype.setupUserFunctions = function() {
 };
 
 /**
- * Default Options
- *
- * @type {Object}
- */
-var defaultOptions = {
-  speed: 10,
-  rotate: 0,
-  ease: 'Linear',
-  wavesWidth: '95%'
-};
-
-/**
  * This stores each wave and is filled by the user
  *
  * @type {Array}
@@ -145,29 +145,32 @@ function getWaveWidth(value, width) {
 }
 
 /**
+ * Get the height or width from a number, function or fallback
+ * to the default client dimension
+ *
+ * @param    {Mixed}   dimension   This can be a function or number
+ *
+ * @return   {Number}
+ */
+SineWaves.prototype.getDimension = function(dimension) {
+  if (Utilities.isNumber(this[dimension])) {
+    return this[dimension];
+  } else if (Utilities.isFunction(this[dimension])) {
+    return this[dimension].call(this, this.el);
+  } else if (dimension === '_width') {
+    return this.el.clientWidth;
+  } else if (dimension === '_height') {
+    return this.el.clientHeight;
+  }
+};
+
+/**
  * Internal resize event to make the canvas fill the screen
  */
 SineWaves.prototype.updateDimensions = function() {
-  var width;
-  var height;
-
-  // Width
-  if (Utilities.isType(this._width, 'number')) {
-    width = this._width;
-  } else if (Utilities.isType(this._width, 'function')) {
-    width = this._width.call(this, this.el);
-  } else {
-    width = this.el.clientWidth;
-  }
-
-  // Height
-  if (Utilities.isType(this._height, 'number')) {
-    height = this._height;
-  } else if (Utilities.isType(this._height, 'function')) {
-    height = this._height.call(this, this.el);
-  } else {
-    height = this.el.clientHeight;
-  }
+  // Dimensions
+  var width = this.getDimension('_width');
+  var height = this.getDimension('_height');
 
   // Apply DPR for retina devices
   this.width = this.el.width = width * this.dpr;
