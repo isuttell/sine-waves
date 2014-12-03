@@ -69,9 +69,22 @@ function SineWaves(options) {
     this.running = options.running;
   }
 
+  this.setupWaveFn();
+
   // Start the magic
   this.loop();
 }
+
+/**
+ * Get the user wave function or one of the built in functions
+ */
+SineWaves.prototype.setupWaveFn = function() {
+  var index = -1;
+  var length = this.waves.length;
+  while (++index < length) {
+    this.waves[index].waveFn = Utilities.getFn(Waves, this.waves[index].type, 'sine');
+  }
+};
 
 /**
  * Sets up the user resize event and the initialize event
@@ -276,7 +289,6 @@ SineWaves.prototype.getPoint = function(time, position, options) {
 SineWaves.prototype.drawWave = function(time, options) {
   // Setup defaults
   options = Utilities.defaults(defaultWave, options);
-  options.waveFn = Utilities.getFn(Waves, options.type, 'sine');
 
   // Styles
   this.ctx.lineWidth = options.lineWidth * this.dpr;
