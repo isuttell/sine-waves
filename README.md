@@ -168,6 +168,6 @@ waves.update();
 SineWaves is open-sourced software licensed under the MIT license
 
 ## Release History
-- v0.3.0 - Refactor and added custom waves
+- v0.3.0 - Refactor, added custom waves, and bug fixes
 - v0.2.0-alpha - Added rotate, ease, wavesWidth and wave types options
 - v0.1.0-alpha - Initial Release

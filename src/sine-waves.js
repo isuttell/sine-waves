@@ -27,6 +27,7 @@ function SineWaves(options) {
 
   // Make sure we have a cancas
   this.el = this.options.el;
+  delete this.options.el;
   if (!this.el) {
     throw 'No Canvas Selected';
   }
@@ -35,7 +36,8 @@ function SineWaves(options) {
   this.ctx = this.el.getContext('2d');
 
   // Do we have any waves
-  this.waves = options.waves;
+  this.waves = this.options.waves;
+  delete this.options.waves;
   if (!this.waves || !this.waves.length) {
     throw 'No waves specified';
   }
@@ -84,13 +86,13 @@ SineWaves.prototype.setupWaveFns = function() {
  */
 SineWaves.prototype.setupUserFunctions = function() {
   // User Resize Function
-  if (Utilities.isType(this.options.resizeEvent, 'function')) {
+  if (Utilities.isFunction(this.options.resizeEvent)) {
     this.options.resizeEvent.call(this);
     window.addEventListener('resize', this.options.resizeEvent.bind(this));
   }
 
   // User initialize
-  if (Utilities.isType(this.options.initialize, 'function')) {
+  if (Utilities.isFunction(this.options.initialize)) {
     this.options.initialize.call(this);
   }
 };
