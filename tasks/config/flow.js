@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
   grunt.config.set('flow', {
     options: {
-      lib: './lib'
+      lib: 'lib/'
     },
     single: {
       options: {
