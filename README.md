@@ -36,12 +36,13 @@ var waves = new SineWaves({
   // An array of wave options
   waves: [
     {
-      timeModifier: 1, // This is multiplied againse `speed`
-      lineWidth: 3, // Stroke width
-      amplitude: 150,  // How tall is the wave
-      wavelength: 200, // How long is the wave
+      timeModifier: 1,   // This is multiplied againse `speed`
+      lineWidth: 3,      // Stroke width
+      amplitude: 150,    // How tall is the wave
+      wavelength: 200,   // How long is the wave
       segmentLength: 20, // How smooth should the line be
-      strokeStyle: 'rgba(255, 255, 255, 0.5)' // Stroke color and opacity
+      strokeStyle: 'rgba(255, 255, 255, 0.5)', // Stroke color and opacity
+      type: 'sine'       // Wave type
     },
     {
       timeModifier: 1,
@@ -84,8 +85,7 @@ The default easing is `Linear` which means the waves are not modified from left 
 Alternatively you can pass a function directly to the `ease` option when creating a SineWaves instance.
 
 ```js
-  // Example of
-  linear growth
+  // Example of linear growth
   ease: function(percent, amplitude) {
     return amplitude * percent;
   },
