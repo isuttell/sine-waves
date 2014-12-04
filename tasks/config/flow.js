@@ -14,13 +14,23 @@ module.exports = function(grunt) {
     options: {
       lib: 'lib/'
     },
-    single: {
+    src: {
       options: {
         background: false,
         stripRoot: true,
         profile: true
       },
       src: '.'
+    },
+    single: {
+      options: {
+        background: false,
+        stripRoot: true,
+        profile: true
+      },
+      files: {
+        src: ['src/**/*.js']
+      }
     },
     watch: {
       options: {
