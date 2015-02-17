@@ -1,8 +1,10 @@
-/* @flow */
 /************************************************
  * @file  General utility functions
  * @author  Isaac Suttell
+ * @flow
  ************************************************/
+
+var Constants = require('./constants.js');
 
 /**
  * Utilities wrapper
@@ -106,7 +108,7 @@ var degreesToRadians = Utilities.degreesToRadians = function(degrees) {
   if (!isType(degrees, 'number')) {
     throw new TypeError('Degrees is not a number');
   }
-  return degrees * PI180;
+  return degrees * Constants.PI180;
 };
 
 /**
@@ -128,3 +130,5 @@ var getFn = Utilities.getFn = function(obj, name, def) {
     return obj[def];
   }
 };
+
+module.exports = Utilities;

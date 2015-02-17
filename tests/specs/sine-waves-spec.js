@@ -1,4 +1,8 @@
+var SineWaves = require('../../src/sine-waves.js');
+var Waves = require('../../src/lib/waves.js');
+
 describe('sine-waves.js', function() {
+
   var element;
   beforeEach(function() {
     element = document.createElement('canvas');
@@ -119,7 +123,7 @@ describe('sine-waves.js', function() {
       waveOptions = {
         amplitude: 10,
         wavelength: 10,
-        waveFn: SineWaves.prototype.Waves.sine
+        waveFn: Waves.sine
       };
     });
 

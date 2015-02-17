@@ -1,8 +1,13 @@
-/* @flow */
 /************************************************
  * @file  Constructor and animation controller
  * @author  Isaac Suttell
+ * @flow
  ************************************************/
+
+var Utilities = require('./lib/utilities.js');
+var Waves = require('./lib/waves.js');
+var Ease = require('./lib/ease.js');
+require('./lib/polyfills.js');
 
 /**
  * Generates multiple customizable animated sines waves
@@ -325,16 +330,4 @@ SineWaves.prototype.loop = function() {
   window.requestAnimationFrame(this.loop.bind(this));
 };
 
-/**
- * Make the Wave functions available
- *
- * @type    {Object}
- */
-SineWaves.prototype.Waves = Waves;
-
-/**
- * Make the Ease functions available
- *
- * @type    {Object}
- */
-SineWaves.prototype.Ease = Ease;
+module.exports = window.SineWaves = SineWaves;

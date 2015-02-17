@@ -1,3 +1,5 @@
+var Waves = require('../../src/lib/waves.js');
+
 describe('waves.js', function() {
 
   describe('Waves.Sine', function() {

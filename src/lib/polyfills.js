@@ -1,7 +1,7 @@
-/* @flow */
 /************************************************
  * @file  Polyfills for older browsers
  * @author  Isaac Suttell
+ * @flow
  ************************************************/
 
 /**

@@ -7,26 +7,23 @@ module.exports = function(config) {
 
     files: [
       'tests/vendor/**/*.js',
-      'src/lib/polyfills.js',
-      'src/constants.js',
-      'src/utilities.js',
-      'src/ease.js',
-      'src/waves.js',
-      'src/sine-waves.js',
+      'src/**/*.js',
       'tests/specs/**/*.js',
     ],
 
-    preprocessors: {
-      'src/*.js': ['coverage'],
-    },
-
     autoWatch: false,
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'browserify'],
+
+    preprocessors: {
+      'tests/specs/**/*.js': ['browserify'],
+      'src/**/*.js': ['browserify'],
+    },
 
     browsers: ['PhantomJS'],
 
     plugins: [
+      'karma-browserify',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-safari-launcher',
@@ -36,6 +33,11 @@ module.exports = function(config) {
       'karma-story-reporter',
       'karma-html-reporter'
     ],
+
+    browserify: {
+      debug: true,
+      transform: ["browserify-istanbul"]
+    },
 
     coverageReporter: {
       dir: 'tests/coverage/',

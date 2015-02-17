@@ -11,7 +11,8 @@ module.exports = function(grunt) {
 
   // Auto load grunt tasks
   require('jit-grunt')(grunt, {
-    flow: 'grunt-flow-type-check'
+    flow: 'grunt-flow-type-check',
+    usebanner: 'grunt-banner'
   });
 
   /**

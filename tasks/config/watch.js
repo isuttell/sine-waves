@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
     src: {
       files: ['src/**/*.js', 'tests/specs/**/*.js'],
-      tasks: ['asciify', 'concat', 'karma:watch:run', 'jshint:src', 'jscs:src', 'flow:watch:status']
+      tasks: ['browserify:dev', 'usebanner:dev', 'karma:watch:run', 'jshint:src', 'jscs:src', 'flow:watch:status']
     },
 
     grunt: {
@@ -32,6 +32,13 @@ module.exports = function(grunt) {
         reload: true
       }
     },
+
+    livereload: {
+      files: ['sine-waves.js'],
+      options: {
+        livereload: true
+      }
+    }
 
   });
 

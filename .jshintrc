@@ -17,6 +17,7 @@
   "globals"       : {
       "module"    : false,
       "define"    : false,
+      "require"   : false,
       "PI2"       : true,
       "PI180"     : true,
       "HALFPI"    : true,

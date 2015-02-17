@@ -1,8 +1,10 @@
-/* @flow */
 /************************************************
  * @file  Sine Wave functions
  * @author Isaac Suttell
+ * @flow
  ************************************************/
+
+var Constants = require('./constants.js');
 
 /**
  * Holds the different types of waves
@@ -50,7 +52,7 @@ Waves.sign = function(x) {
  * @param    {Number}    x
  */
 Waves.square = function(x) {
-  return Waves.sign(Math.sin(x * PI2));
+  return Waves.sign(Math.sin(x * Constants.PI2));
 };
 
 /**
@@ -70,3 +72,5 @@ Waves.sawtooth = function(x) {
 Waves.triangle = function(x) {
   return Math.abs(Waves.sawtooth(x));
 };
+
+module.exports = Waves;

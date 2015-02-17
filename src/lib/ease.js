@@ -1,8 +1,15 @@
-/* @flow */
 /************************************************
  * @file  Left to right easing functions
  * @author Isaac Suttell
+ * @flow
  ************************************************/
+
+/**
+ * Load Constants
+ *
+ * @type    {Object}
+ */
+var Constants = require('./constants.js');
 
 /**
  * This holds all of the easing objects and can be added to by the user
@@ -33,7 +40,7 @@ Ease.linear = function(percent, amplitude) {
  * @return {Number}           the new strength
  */
 Ease.sinein = function(percent, amplitude) {
-  return amplitude * (Math.sin(percent * Math.PI - HALFPI) + 1) * 0.5;
+  return amplitude * (Math.sin(percent * Math.PI - Constants.HALFPI) + 1) * 0.5;
 };
 
 /**
@@ -46,7 +53,7 @@ Ease.sinein = function(percent, amplitude) {
  * @return {Number}           the new strength
  */
 Ease.sineout = function(percent, amplitude) {
-  return amplitude * (Math.sin(percent * Math.PI + HALFPI) + 1) * 0.5;
+  return amplitude * (Math.sin(percent * Math.PI + Constants.HALFPI) + 1) * 0.5;
 };
 
 /**
@@ -59,5 +66,7 @@ Ease.sineout = function(percent, amplitude) {
  * @return {Number}           the new strength
  */
 Ease.sineinout = function(percent, amplitude) {
-  return amplitude * (Math.sin(percent * PI2 - HALFPI) + 1) * 0.5;
+  return amplitude * (Math.sin(percent * Constants.PI2 - Constants.HALFPI) + 1) * 0.5;
 };
+
+module.exports = Ease;

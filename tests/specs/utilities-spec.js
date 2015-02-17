@@ -1,3 +1,5 @@
+var Utilities = require('../../src/lib/utilities.js');
+
 describe('utilities.js', function() {
 
   describe('degreesToRadians', function() {

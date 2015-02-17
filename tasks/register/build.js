@@ -11,8 +11,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'test',
     'asciify',
-    'concat',
-    'jshint:build', // run on the concated file
-    'uglify'
+    'browserify:dev',
+    'uglify',
+    'usebanner'
   ]);
 };
