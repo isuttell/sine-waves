@@ -1,6 +1,8 @@
 {
   "name": "sine-waves",
   "version": "v0.3.0",
+  "main": "sine-waves.js",
+  "browser": "src/sine-waves.js",
   "description": "Generate multiple configurable sine waves",
   "homepage": "https://github.com/isuttell/sine-waves",
   "repository": {
