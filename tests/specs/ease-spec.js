@@ -1,5 +1,5 @@
 var Ease = require('../../src/lib/ease.js');
-var Utilities = require('../../src/lib/Utilities.js');
+var Utilities = require('../../src/lib/utilities.js');
 
 describe('ease.js', function() {
 
