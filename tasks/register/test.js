@@ -8,7 +8,6 @@
  */
 module.exports = function(grunt) {
   grunt.registerTask('test', [
-    'karma:single',
-    'hint'
+    'karma:single'
   ]);
 };
