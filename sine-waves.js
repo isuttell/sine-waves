@@ -484,22 +484,6 @@ SineWaves.prototype.setupUserFunctions = function() {
 };
 
 /**
- * Defaults for each line created
- *
- * @type {Object}
- */
-SineWaves.prototype.defaultWave = {
-  timeModifier: 1,
-  amplitude: 50,
-  wavelength: 50,
-  segmentLength: 10,
-  lineWidth: 1,
-  strokeStyle: 'rgba(255, 255, 255, 0.2)',
-  type: 'Sine',
-  yAxis: this.yAxis
-};
-
-/**
  * Takes either pixels or percents and calculates how wide the sine
  * waves should be
  *
@@ -655,8 +639,19 @@ SineWaves.prototype.getPoint = function(time, position, options) {
  * @param  {Object} options wave options
  */
 SineWaves.prototype.drawWave = function(time, options) {
+  var defaultWave = {
+    timeModifier: 1,
+    amplitude: 50,
+    wavelength: 50,
+    segmentLength: 10,
+    lineWidth: 1,
+    strokeStyle: 'rgba(255, 255, 255, 0.2)',
+    type: 'Sine',
+    yAxis: this.yAxis
+  };
+
   // Setup defaults
-  options = Utilities.defaults(this.defaultWave, options);
+  options = Utilities.defaults(defaultWave, options);
 
   // Styles
   this.ctx.lineWidth = options.lineWidth * this.dpr;
