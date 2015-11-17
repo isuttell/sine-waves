@@ -1,14 +1,14 @@
 /**
- * CMD: grunt test
+ * CMD: lint
  *
  * ---------------------------------------------------------------
  *
- * Runs unit tests and `grunt hint`
+ * Lint the code
  *
  */
 module.exports = function(grunt) {
   grunt.registerTask('test', [
-    'karma:single',
-    'hint'
+    'eslint',
+    'karma:dev'
   ]);
 };

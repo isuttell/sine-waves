@@ -1,6 +1,6 @@
 {
   "name": "sine-waves",
-  "version": "v0.3.0",
+  "version": "v1.0.0",
   "description": "Generate multiple configurable sine waves",
   "homepage": "https://github.com/isuttell/sine-waves",
   "repository": {
@@ -8,35 +8,44 @@
     "url": "https://github.com/isuttell/sine-waves.git"
   },
   "scripts": {
+    "build": "grunt build",
+    "start": "grunt server",
     "test": "grunt test"
   },
   "contributors": [
     "Isaac Suttell <isaac@isaacsuttell.com>"
   ],
+  "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "babel-eslint": "^4.1.5",
+    "babel-loader": "^6.1.0",
+    "babel-preset-es2015": "^6.1.18",
     "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.11.2",
-    "grunt-asciify": "^0.2.2",
+    "eslint-loader": "^1.1.1",
     "grunt-cli": "~0.1.13",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.6.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-flow-type-check": "^0.4.1",
-    "grunt-jscs": "^1.0.0",
-    "grunt-jsvalidate": "^0.2.2",
-    "grunt-karma": "~0.9.0",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-eslint": "^17.3.1",
+    "grunt-karma": "^0.9.0",
+    "grunt-webpack": "^1.0.11",
+    "invariant": "^2.1.2",
+    "isparta": "^4.0.0",
+    "isparta-loader": "git+https://github.com/isuttell/isparta-loader.git#master",
     "jasmine-core": "^2.1.2",
-    "jit-grunt": "^0.9.0",
-    "karma": "~0.12.24",
+    "karma": "^0.13.15",
     "karma-chrome-launcher": "^0.1.5",
-    "karma-coverage": "~0.2.6",
+    "karma-coverage": "^0.2.7",
     "karma-firefox-launcher": "^0.1.3",
     "karma-html-reporter": "^0.2.4",
-    "karma-jasmine": "^0.3.0",
-    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.1.4",
     "karma-safari-launcher": "^0.1.1",
-    "karma-story-reporter": "~0.2.2"
+    "karma-story-reporter": "~0.2.2",
+    "karma-webpack": "^1.7.0",
+    "object-assign": "^4.0.1",
+    "phantomjs-polyfill": "0.0.1",
+    "webpack": "^1.12.6",
+    "webpack-dev-server": "^1.12.1"
   }
 }

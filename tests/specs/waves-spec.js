@@ -1,3 +1,5 @@
+import * as Waves from '../../src/waves';
+
 describe('waves.js', function() {
 
   describe('Waves.Sine', function() {

@@ -1,24 +1,18 @@
-/* @flow */
 /************************************************
  * @file  Sine Wave functions
  * @author Isaac Suttell
  ************************************************/
 
-/**
- * Holds the different types of waves
- *
- * @type    {Object}
- */
-var Waves = {};
+const PI2 = Math.PI * 2;
 
 /**
  * Default Sine Waves
  *
  * @param    {Number}    x
  */
-Waves.sine = function(x) {
+export function sine(x) {
   return Math.sin(x);
-};
+}
 
 /**
  * Alias for Sine
@@ -26,7 +20,7 @@ Waves.sine = function(x) {
  * @alias
  * @type    {Function}
  */
-Waves.sin = Waves.sine;
+export var sin = sine;
 
 /**
  * Sign polyfill
@@ -36,37 +30,37 @@ Waves.sin = Waves.sine;
  *
  * @return    {Number}
  */
-Waves.sign = function(x) {
+export function sign(x) {
   x = +x; // convert to a number
   if (x === 0 || isNaN(x)) {
     return x;
   }
   return x > 0 ? 1 : -1;
-};
+}
 
 /**
  * Square Waves
  *
  * @param    {Number}    x
  */
-Waves.square = function(x) {
-  return Waves.sign(Math.sin(x * PI2));
-};
+export function square(x) {
+  return sign(Math.sin(x * PI2));
+}
 
 /**
  * Sawtooth Waves
  *
  * @param    {Number}    x
  */
-Waves.sawtooth = function(x) {
+export function sawtooth(x) {
   return (x - Math.floor(x + 0.5)) * 2;
-};
+}
 
 /**
  * Triangle Waves
  *
  * @param    {Number}    x
  */
-Waves.triangle = function(x) {
-  return Math.abs(Waves.sawtooth(x));
-};
+export function triangle(x) {
+  return Math.abs(sawtooth(x));
+}

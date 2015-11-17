@@ -4,15 +4,7 @@ Generate multiple configurable sine waves using a `canvas` element
 
 [![Build Status](http://img.shields.io/travis/isuttell/sine-waves/master.svg?style=flat)](https://travis-ci.org/isuttell/sine-waves)
 [![Coverage Status](https://img.shields.io/coveralls/isuttell/sine-waves/master.svg?style=flat)](https://coveralls.io/r/isuttell/sine-waves)
-[![Codacy Badge](https://img.shields.io/codacy/a52fd69032474c0ca88dc06ab69a9839.svg?style=flat)](https://www.codacy.com/public/isuttell/sine-waves)
 [![Dev Dependencies](http://img.shields.io/david/dev/isuttell/sine-waves.svg?style=flat)](https://david-dm.org/isuttell/sine-waves#info=devDependencies)
-[![Release](https://img.shields.io/bower/v/sine-waves.svg?style=flat)](https://github.com/isuttell/sine-waves/tarball/master)
-
-## Bower
-
-```shell
-bower install sine-waves --save
-```
 
 ## Basic Usage
 ```js
@@ -23,7 +15,7 @@ var waves = new SineWaves({
   // General speed of entire wave system
   speed: 8,
 
-  // How many degress should we rotate all of the waves
+  // How many degrees should we rotate all of the waves
   rotate: 0,
 
   // Ease function from left to right
@@ -36,7 +28,7 @@ var waves = new SineWaves({
   // An array of wave options
   waves: [
     {
-      timeModifier: 1,   // This is multiplied againse `speed`
+      timeModifier: 1,   // This is multiplied against `speed`
       lineWidth: 3,      // Stroke width
       amplitude: 150,    // How tall is the wave
       wavelength: 200,   // How long is the wave
@@ -56,7 +48,7 @@ var waves = new SineWaves({
   // Perform any additional initializations here
   initialize: function (){},
 
-  // This function is called whenver the window is resized
+  // This function is called whenever the window is resized
   resizeEvent: function() {
 
     // Here is an example on how to create a gradient stroke
@@ -145,7 +137,7 @@ You can also specify your own wave function by supplying a function to the type 
 * [Alternative Wave Types](http://codepen.io/isuttell/pen/MYaoKX)
 
 ## Mobile
-Canvas is supported on most devices however the due limited processing power complex animations may appear choppy. You can either create simplier animations for mobile or disable the animation by setting the `running` property to `false`. Running the `update()` method will update the animation one frame while paused.
+Canvas is supported on most devices however the due limited processing power complex animations may appear choppy. You can either create simpler animations for mobile or disable the animation by setting the `running` property to `false`. Running the `update()` method will update the animation one frame while paused.
 
 ```js
 var waves = new SineWaves({

@@ -1,3 +1,6 @@
+import * as Ease from '../../src/ease.js';
+import * as util from '../../src/utilities.js'
+
 describe('ease.js', function() {
 
   describe('Ease.linear', function() {
@@ -43,18 +46,18 @@ describe('ease.js', function() {
   describe('Easing', function() {
     it('should return a function if passed a function', function() {
       var expectedFn = function() {};
-      expect(Utilities.getFn(Ease, expectedFn, 'linear')).toBe(expectedFn);
+      expect(util.getFn(Ease, expectedFn, 'linear')).toBe(expectedFn);
     });
 
     it('should return a function if passed a ease function name', function() {
-      expect(Utilities.getFn(Ease, 'Linear', 'linear')).toBe(Ease.linear);
-      expect(Utilities.getFn(Ease, 'SineIn', 'linear')).toBe(Ease.sinein);
-      expect(Utilities.getFn(Ease, 'SineOut', 'linear')).toBe(Ease.sineout);
-      expect(Utilities.getFn(Ease, 'SineInOut', 'linear')).toBe(Ease.sineinout);
+      expect(util.getFn(Ease, 'Linear', 'linear')).toBe(Ease.linear);
+      expect(util.getFn(Ease, 'SineIn', 'linear')).toBe(Ease.sinein);
+      expect(util.getFn(Ease, 'SineOut', 'linear')).toBe(Ease.sineout);
+      expect(util.getFn(Ease, 'SineInOut', 'linear')).toBe(Ease.sineinout);
     });
 
     it('should default to Linear', function() {
-      expect(Utilities.getFn(Ease, 'FakeEase', 'linear')).toBe(Ease.linear);
+      expect(util.getFn(Ease, 'FakeEase', 'linear')).toBe(Ease.linear);
     });
   });
 

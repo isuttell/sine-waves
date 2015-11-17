@@ -1,0 +1,28 @@
+{
+  "parser": "babel-eslint",
+
+  "globals" : {},
+
+  "ecmaFeatures": {
+    "binaryLiterals": false,                    // enable binary literals
+    "blockBindings": true,                      // enable let and const (aka block bindings)
+    "defaultParams": true,                      // enable default function parameters
+    "forOf": true,                              // enable for-of loops
+    "generators": false,                        // enable generators
+    "objectLiteralComputedProperties": false,   // enable computed object literal property names
+    "objectLiteralDuplicateProperties": false,  // enable duplicate object literal properties in strict mode
+    "objectLiteralShorthandMethods": false,     // enable object literal shorthand methods
+    "objectLiteralShorthandProperties": false,  // enable object literal shorthand properties
+    "octalLiterals": false,                     // enable octal literals
+    "regexUFlag": false,                        // enable the regular expression u flag
+    "regexYFlag": false,                        // enable the regular expression y flag
+    "templateStrings": false,                   // enable template strings
+    "unicodeCodePointEscapes": false,           // enable code point escapes
+    "jsx": false                                // enable JSX
+  },
+
+  "env": {
+    "node": true,        // Node.js global variables and Node.js-specific rules.
+    "jasmine": true      // adds all of the Jasmine testing global variables for version 1.3 and 2.0.
+  }
+}

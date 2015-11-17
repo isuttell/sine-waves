@@ -44,7 +44,7 @@
         <h1 id="title">Custom SineWaves</h1>
         <canvas id="waves"></canvas>
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="../sine-waves.js"></script>
+        <script src="../dist/SineWaves.js"></script>
         <script>
         $(function(){
             var waves = new SineWaves({
@@ -78,6 +78,7 @@
                   wavelength: 100,
                   segmentLength: 1,
                   type: function(x, waves) {
+                    debugger;
                     return Math.sin(x) * waves.sawtooth(x);
                   },
                 }

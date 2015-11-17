@@ -1,15 +1,10 @@
-/* @flow */
 /************************************************
  * @file  Left to right easing functions
  * @author Isaac Suttell
  ************************************************/
 
-/**
- * This holds all of the easing objects and can be added to by the user
- *
- * @type    {Object}
- */
-var Ease = {};
+const HALFPI = Math.PI / 2;
+const PI2 = Math.PI * 2;
 
 /**
  * Do not apply any easing
@@ -19,9 +14,9 @@ var Ease = {};
  *
  * @return {Number}           the new strength
  */
-Ease.linear = function(percent, amplitude) {
+export function linear(percent, amplitude) {
   return amplitude;
-};
+}
 
 /**
  * Easing function to control how string each wave is from
@@ -32,9 +27,9 @@ Ease.linear = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.sinein = function(percent, amplitude) {
+export function sinein(percent, amplitude) {
   return amplitude * (Math.sin(percent * Math.PI - HALFPI) + 1) * 0.5;
-};
+}
 
 /**
  * Easing function to control how string each wave is from
@@ -45,9 +40,9 @@ Ease.sinein = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.sineout = function(percent, amplitude) {
+export function sineout(percent, amplitude) {
   return amplitude * (Math.sin(percent * Math.PI + HALFPI) + 1) * 0.5;
-};
+}
 
 /**
  * Easing function to control how string each wave is from
@@ -58,6 +53,6 @@ Ease.sineout = function(percent, amplitude) {
  *
  * @return {Number}           the new strength
  */
-Ease.sineinout = function(percent, amplitude) {
+export function sineinout(percent, amplitude) {
   return amplitude * (Math.sin(percent * PI2 - HALFPI) + 1) * 0.5;
-};
+}

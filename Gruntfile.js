@@ -9,11 +9,6 @@
 module.exports = function(grunt) {
   'use strict';
 
-  // Auto load grunt tasks
-  require('jit-grunt')(grunt, {
-    flow: 'grunt-flow-type-check'
-  });
-
   /**
    * Loads Grunt configuration modules from the specified
    * relative path. These modules should export a function
@@ -46,22 +41,22 @@ module.exports = function(grunt) {
     var list = require('fs').readdirSync(dir);
 
     /**
-     * Setup the Regex to filter out *.js files
+     * Setup the Regex to filter out *.js files but exclude files with
+     * multiple `.` in them
      *
      * @type    {RegExp}
      */
-    var jsFile = /.*\.js/;
+    var jsFileTest = /^\w+\.js$/i;
 
     // Cycle through each item in the directory
     list.forEach(function(module) {
       //Check to see if with have a match and if we split it apartment
-      module = module.match(jsFile);
-      if (module) {
+      if (jsFileTest.test(module)) {
         // If we find a match try to load and save it. Otherwise log an error
         try {
-          modules[module[0]] = require(dir + '/' + module[0]);
+          modules[module] = require(dir + '/' + module);
         } catch (err) {
-          console.error('Unable to load ' + dir + '/' + module[0], err);
+          console.error('Unable to load ' + dir + '/' + module, err);
         }
       }
     });
@@ -75,7 +70,7 @@ module.exports = function(grunt) {
    */
   function invokeConfigFn(tasks) {
     for (var taskName in tasks) {
-      if (tasks.hasOwnProperty(taskName)) {
+      if (tasks.hasOwnProperty(taskName) && typeof tasks[taskName] === 'function') {
         tasks[taskName](grunt);
       }
     }

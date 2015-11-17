@@ -1,4 +1,7 @@
-describe('sine-waves.js', function() {
+import { SineWaves } from '../../src/SineWaves.js';
+import * as Waves from '../../src/waves.js';
+
+describe('SineWaves.js', function() {
   var element;
   beforeEach(function() {
     element = document.createElement('canvas');
@@ -14,7 +17,7 @@ describe('sine-waves.js', function() {
     it('should throw an error if no element is supplied', function() {
       expect(function() {
         new SineWaves();
-      }).toThrow('No Canvas Selected');
+      }).toThrow();
     });
 
     it('should throw an error if no waves are specified', function() {
@@ -22,12 +25,12 @@ describe('sine-waves.js', function() {
         new SineWaves({
           el: element
         });
-      }).toThrow('No waves specified');
+      }).toThrow();
     });
 
     it('should call initialize if it is defined', function() {
       var called = false;
-      var waves = new SineWaves({
+      new SineWaves({
         el: element,
         width: 100,
         waves: [{}, {}],
@@ -40,7 +43,7 @@ describe('sine-waves.js', function() {
 
     it('should call resizeEvent if it is defined', function() {
       var called = false;
-      var waves = new SineWaves({
+      new SineWaves({
         el: element,
         waves: [{}],
         resizeEvent: function() {
@@ -96,7 +99,7 @@ describe('sine-waves.js', function() {
       var waves = new SineWaves({
         el: element,
         waves: [{}],
-        speed: 100,
+        speed: 100
       });
 
       expect(waves.options.speed).toBe(100);
@@ -119,7 +122,7 @@ describe('sine-waves.js', function() {
       waveOptions = {
         amplitude: 10,
         wavelength: 10,
-        waveFn: SineWaves.prototype.Waves.sine
+        waveFn: Waves.sine
       };
     });
 

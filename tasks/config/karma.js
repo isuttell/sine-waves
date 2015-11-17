@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       configFile: 'tests/karma.conf.js',
       separator: ''
     },
-    single: {
+    dev: {
       options: {
         singleRun: true,
         browsers: ['PhantomJS'],
@@ -26,14 +26,8 @@ module.exports = function(grunt) {
         browsers: ['PhantomJS'],
         logLevel: 'DEBUG'
       }
-    },
-    all: {
-      options: {
-        singleRun: true,
-        browsers: ['PhantomJS', 'Chrome', 'Firefox', 'Safari'],
-        logLevel: 'INFO'
-      }
     }
   });
 
+  grunt.loadNpmTasks('grunt-karma');
 };

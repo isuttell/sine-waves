@@ -1,32 +1,16 @@
+var webpack = require('karma-webpack');
+
 module.exports = function(config) {
-  'use strict';
-
   config.set({
-
-    basePath: '../',
-
-    files: [
-      'tests/vendor/**/*.js',
-      'src/lib/polyfills.js',
-      'src/constants.js',
-      'src/utilities.js',
-      'src/ease.js',
-      'src/waves.js',
-      'src/sine-waves.js',
-      'tests/specs/**/*.js',
-    ],
-
-    preprocessors: {
-      'src/*.js': ['coverage'],
-    },
-
-    autoWatch: false,
-
     frameworks: ['jasmine'],
-
-    browsers: ['PhantomJS'],
-
+    basePath: '../',
+    files: [
+      './tests/raf-polyfill.js',
+      './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './tests/specs/**/*-spec.js'
+    ],
     plugins: [
+      webpack,
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-safari-launcher',
@@ -36,26 +20,38 @@ module.exports = function(config) {
       'karma-story-reporter',
       'karma-html-reporter'
     ],
-
+    browsers: ['PhantomJS'],
+    preprocessors: {
+      './tests/specs/**/*-spec.js': ['webpack'],
+      './src/**/*.js': ['webpack']
+    },
+    reporters: ['story', 'coverage'],
     coverageReporter: {
-      dir: 'tests/coverage/',
+      dir: './tests/coverage',
       reporters: [{
         type: 'html',
         subdir: 'html'
       }, {
-        type: 'lcovonly',
+        type: 'lcov',
         subdir: 'lcov'
-      }, {
-        type: 'text-summary'
       }]
     },
-
-    htmlReporter: {
-      outputDir: 'tests/results/',
-      templatePath: __dirname + '/reportTemplate.html'
+    webpack: {
+      module: {
+        loaders: [{
+          test: /\.(jsx?|es6)$/,
+          exclude: /(node_modules)/,
+          loader: 'babel'
+        }],
+        postLoaders: [{
+          test: /\.(jsx?|es6)$/,
+          exclude: /(node_modules|tests)/,
+          loader: 'isparta'
+        }]
+      }
     },
-
-    reporters: ['story', 'html', 'coverage']
-
+    webpackMiddleware: {
+      noInfo: true
+    }
   });
 };
