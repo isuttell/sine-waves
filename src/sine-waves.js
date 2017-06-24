@@ -98,21 +98,6 @@ SineWaves.prototype.setupUserFunctions = function() {
 };
 
 /**
- * Defaults for each line created
- *
- * @type {Object}
- */
-var defaultWave = {
-  timeModifier: 1,
-  amplitude: 50,
-  wavelength: 50,
-  segmentLength: 10,
-  lineWidth: 1,
-  strokeStyle: 'rgba(255, 255, 255, 0.2)',
-  type: 'Sine'
-};
-
-/**
  * Takes either pixels or percents and calculates how wide the sine
  * waves should be
  *
@@ -246,14 +231,14 @@ SineWaves.prototype.update = function(time) {
  * @return {Object}          {x, y}
  */
 SineWaves.prototype.getPoint = function(time, position, options) {
-  var x = (time * this.options.speed) + (-this.yAxis + position) / options.wavelength;
+  var x = (time * this.options.speed) + (-options.yAxis + position) / options.wavelength;
   var y = options.waveFn.call(this, x, Waves);
 
   // Left and Right Sine Easing
   var amplitude = this.easeFn.call(this, position / this.waveWidth, options.amplitude);
 
   x = position + this.waveLeft;
-  y = amplitude * y + this.yAxis;
+  y = amplitude * y + options.yAxis;
 
   return {
     x: x,
@@ -268,6 +253,17 @@ SineWaves.prototype.getPoint = function(time, position, options) {
  * @param  {Object} options wave options
  */
 SineWaves.prototype.drawWave = function(time, options) {
+  var defaultWave = {
+    timeModifier: 1,
+    amplitude: 50,
+    wavelength: 50,
+    segmentLength: 10,
+    lineWidth: 1,
+    strokeStyle: 'rgba(255, 255, 255, 0.2)',
+    type: 'Sine',
+    yAxis: this.yAxis
+  };
+
   // Setup defaults
   options = Utilities.defaults(defaultWave, options);
 
@@ -279,8 +275,8 @@ SineWaves.prototype.drawWave = function(time, options) {
   this.ctx.beginPath();
 
   // Starting Line
-  this.ctx.moveTo(0, this.yAxis);
-  this.ctx.lineTo(this.waveLeft, this.yAxis);
+  this.ctx.moveTo(0, options.yAxis);
+  this.ctx.lineTo(this.waveLeft, options.yAxis);
 
   var i;
   var point;
@@ -296,12 +292,12 @@ SineWaves.prototype.drawWave = function(time, options) {
     point = void 0;
   }
 
+  // Ending Line
+  this.ctx.lineTo(this.width, options.yAxis);
+
   // Clean  up
   i = void 0;
   options = void 0;
-
-  // Ending Line
-  this.ctx.lineTo(this.width, this.yAxis);
 
   // Stroke it
   this.ctx.stroke();

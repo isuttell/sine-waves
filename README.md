@@ -44,6 +44,7 @@ var waves = new SineWaves({
       segmentLength: 20, // How smooth should the line be
       strokeStyle: 'rgba(255, 255, 255, 0.5)', // Stroke color and opacity
       type: 'sine'       // Wave type
+      yAxis: '50'        // Position of wave on y-axis, optional, defaults to centering the wave on the y-axis
     },
     {
       timeModifier: 1,

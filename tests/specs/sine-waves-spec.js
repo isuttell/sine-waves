@@ -119,7 +119,8 @@ describe('sine-waves.js', function() {
       waveOptions = {
         amplitude: 10,
         wavelength: 10,
-        waveFn: SineWaves.prototype.Waves.sine
+        waveFn: SineWaves.prototype.Waves.sine,
+        yAxis: waves.yAxis
       };
     });
 
