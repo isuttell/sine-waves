@@ -67,7 +67,8 @@ SineWaves.prototype.options = {
   speed: 10,
   rotate: 0,
   ease: 'Linear',
-  wavesWidth: '95%'
+  wavesWidth: '95%',
+  isLoopBlocked: false,
 };
 
 /**
@@ -318,12 +319,26 @@ SineWaves.prototype.running = true;
  * Animation Loop Controller
  */
 SineWaves.prototype.loop = function() {
-  if (this.running === true) {
+  if (this.running === true && this.isLoopBlocked === false) {
     this.update();
+    window.requestAnimationFrame(this.loop.bind(this));
   }
-
-  window.requestAnimationFrame(this.loop.bind(this));
 };
+
+/**
+ * Block loop
+ */
+SineWaves.prototype.blockLoop = function() {
+  this.isLoopBlocked = true
+}
+
+/**
+ * Unblock loop
+ */
+SineWaves.prototype.unblockLoop = function() {
+  this.isLoopBlocked = false
+  window.requestAnimationFrame(this.loop.bind(this))
+}
 
 /**
  * Make the Wave functions available
