@@ -67,7 +67,8 @@ SineWaves.prototype.options = {
   speed: 10,
   rotate: 0,
   ease: 'Linear',
-  wavesWidth: '95%'
+  wavesWidth: '95%',
+  manualUpdate: false,
 };
 
 /**
@@ -322,8 +323,17 @@ SineWaves.prototype.loop = function() {
     this.update();
   }
 
-  window.requestAnimationFrame(this.loop.bind(this));
+  if (!this.options.manualUpdate) {
+    this.animationId = window.requestAnimationFrame(this.loop.bind(this));
+  }
 };
+
+/**
+ * Cancel Loop
+ */
+SineWaves.prototype.cancel = function() {
+  window.cancelAnimationFrame(this.animationId);
+}
 
 /**
  * Make the Wave functions available
