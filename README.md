@@ -32,7 +32,8 @@ var waves = new SineWaves({
 
   // Specific how much the width of the canvas the waves should be
   // This can either be a number or a percent
-  waveWidth: '95%',
+
+  waveWidth: '95%', // `wavesWidth` Maybe multiple waves configs
 
   // An array of wave options
   waves: [
