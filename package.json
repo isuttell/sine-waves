@@ -8,7 +8,7 @@
     "url": "git+https://github.com/isuttell/sine-waves.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "node --test tests/compat/sine-waves.test.js tests/compat/public-api.test.js"
   },
   "contributors": [
     "Isaac Suttell <isaac@isaacsuttell.com>"
