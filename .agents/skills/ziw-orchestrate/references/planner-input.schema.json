@@ -1,0 +1,1544 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/zaks-io/skills/planner-input.schema.json",
+  "title": "Orchestrator planner input",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "repo": { "type": "string", "pattern": "^[^\\s/]+/[^\\s/]+$" },
+    "v": { "type": "integer", "minimum": 1 },
+    "generatedAt": { "type": "string" },
+    "sources": { "type": "object" },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "branch": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "green": { "type": "boolean" },
+        "checks": { "$ref": "#/definitions/checks" }
+      }
+    },
+    "footprint": { "type": "object" },
+    "prs": { "type": "array", "items": { "$ref": "#/definitions/pullRequest" } },
+    "worktrees": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+    "linear": {
+      "type": "object",
+      "properties": {
+        "skipped": { "type": ["string", "null"] },
+        "issues": { "type": "array", "items": { "$ref": "#/definitions/issue" } },
+        "activeIssues": { "type": "array", "items": { "$ref": "#/definitions/issue" } }
+      }
+    },
+    "usage": { "type": "object" },
+    "snapshot": { "$ref": "#/definitions/snapshot" },
+    "config": { "$ref": "#/definitions/config" },
+    "state": { "$ref": "#/definitions/state" },
+    "queue": { "$ref": "#/definitions/state" }
+  },
+  "definitions": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hasReviewEvidence": { "type": "boolean" },
+        "reviewEvidenceCurrent": { "type": "boolean" },
+        "blockingFindings": { "type": "boolean" },
+        "changesRequested": { "type": "boolean" },
+        "linkedPrChanged": { "type": "boolean" },
+        "evidenceMissing": { "type": "boolean" },
+        "requiredChecksPassed": { "type": "boolean" },
+        "requiredChecksGreen": { "type": "boolean" },
+        "checksPassing": { "type": "boolean" },
+        "checksGreen": { "type": "boolean" },
+        "ciGreen": { "type": "boolean" },
+        "scopeMatches": { "type": "boolean" },
+        "diffMatchesScope": { "type": "boolean" },
+        "hostedReviewRequired": { "type": "boolean" },
+        "codeRabbitRequired": { "type": "boolean" },
+        "hostedReviewComplete": { "type": "boolean" },
+        "codeRabbitComplete": { "type": "boolean" },
+        "hostedReviewSkipped": { "type": "boolean" },
+        "codeRabbitSkipped": { "type": "boolean" },
+        "hostedReviewPending": { "type": "boolean" },
+        "hostedReviewCurrent": { "type": "boolean" },
+        "recommended": { "type": "boolean" },
+        "required": { "type": "boolean" },
+        "highRisk": { "type": "boolean" },
+        "prExists": { "type": "boolean" },
+        "explicitLocalCliRequest": { "type": "boolean" },
+        "remoteWorker": { "type": "boolean" },
+        "supportsLocalCli": { "type": "boolean" },
+        "requiresAutoReviewResolution": { "type": "boolean" },
+        "humanMergePrLabelApplied": { "type": "boolean" },
+        "humanReviewPrLabelApplied": { "type": "boolean" },
+        "hasHumanMergePrLabel": { "type": "boolean" },
+        "hasHumanReviewPrLabel": { "type": "boolean" },
+        "productionAction": { "type": "boolean" },
+        "humanDecisionPending": { "type": "boolean" },
+        "reviewVerdict": { "type": ["string", "null"] },
+        "codeReviewVerdict": { "type": ["string", "null"] },
+        "reviewedHeadSha": { "type": ["string", "null"] },
+        "currentPrHeadSha": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "reviewDiffFingerprint": { "type": ["string", "null"] },
+        "currentReviewDiffFingerprint": { "type": ["string", "null"] },
+        "reviewRelevantDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewedDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewHeadSha": { "type": ["string", "null"] },
+        "hostedReviewProvider": { "type": ["string", "null"] },
+        "reviewProvider": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "autoReviewMode": { "type": ["string", "null"] },
+        "autoReview": { "type": ["string", "null"] },
+        "prUrl": { "type": ["string", "null"] },
+        "reviewHeadSha": { "type": ["string", "null"] },
+        "status": { "type": ["string", "null"] },
+        "conformanceHeadSha": { "type": ["string", "null"] },
+        "humanMergePrLabel": { "type": ["string", "null"] },
+        "humanReviewPrLabel": { "type": ["string", "null"] },
+        "reviewDecision": { "type": ["string", "null"] },
+        "reviewEvidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "evidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "labels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "issueLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "prLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "pullRequestLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "riskLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "independentReviewCount": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "independentReviews": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedReviewThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "riskTier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "conformance": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        },
+        "conformanceVerdict": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        }
+      }
+    },
+    "reviewEvidenceCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hasReviewEvidence": { "type": "boolean" },
+        "reviewEvidenceCurrent": { "type": "boolean" },
+        "blockingFindings": { "type": "boolean" },
+        "changesRequested": { "type": "boolean" },
+        "linkedPrChanged": { "type": "boolean" },
+        "evidenceMissing": { "type": "boolean" },
+        "requiredChecksPassed": { "type": "boolean" },
+        "requiredChecksGreen": { "type": "boolean" },
+        "checksPassing": { "type": "boolean" },
+        "checksGreen": { "type": "boolean" },
+        "ciGreen": { "type": "boolean" },
+        "scopeMatches": { "type": "boolean" },
+        "diffMatchesScope": { "type": "boolean" },
+        "hostedReviewRequired": { "type": "boolean" },
+        "codeRabbitRequired": { "type": "boolean" },
+        "hostedReviewComplete": { "type": "boolean" },
+        "codeRabbitComplete": { "type": "boolean" },
+        "hostedReviewSkipped": { "type": "boolean" },
+        "codeRabbitSkipped": { "type": "boolean" },
+        "hostedReviewPending": { "type": "boolean" },
+        "hostedReviewCurrent": { "type": "boolean" },
+        "recommended": { "type": "boolean" },
+        "required": { "type": "boolean" },
+        "highRisk": { "type": "boolean" },
+        "prExists": { "type": "boolean" },
+        "explicitLocalCliRequest": { "type": "boolean" },
+        "remoteWorker": { "type": "boolean" },
+        "supportsLocalCli": { "type": "boolean" },
+        "requiresAutoReviewResolution": { "type": "boolean" },
+        "humanMergePrLabelApplied": { "type": "boolean" },
+        "humanReviewPrLabelApplied": { "type": "boolean" },
+        "hasHumanMergePrLabel": { "type": "boolean" },
+        "hasHumanReviewPrLabel": { "type": "boolean" },
+        "productionAction": { "type": "boolean" },
+        "humanDecisionPending": { "type": "boolean" },
+        "reviewVerdict": { "type": ["string", "null"] },
+        "codeReviewVerdict": { "type": ["string", "null"] },
+        "reviewedHeadSha": { "type": ["string", "null"] },
+        "currentPrHeadSha": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "reviewDiffFingerprint": { "type": ["string", "null"] },
+        "currentReviewDiffFingerprint": { "type": ["string", "null"] },
+        "reviewRelevantDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewedDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewHeadSha": { "type": ["string", "null"] },
+        "hostedReviewProvider": { "type": ["string", "null"] },
+        "reviewProvider": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "autoReviewMode": { "type": ["string", "null"] },
+        "autoReview": { "type": ["string", "null"] },
+        "prUrl": { "type": ["string", "null"] },
+        "reviewHeadSha": { "type": ["string", "null"] },
+        "status": { "type": ["string", "null"] },
+        "conformanceHeadSha": { "type": ["string", "null"] },
+        "humanMergePrLabel": { "type": ["string", "null"] },
+        "humanReviewPrLabel": { "type": ["string", "null"] },
+        "reviewDecision": { "type": ["string", "null"] },
+        "reviewEvidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "evidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "labels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "issueLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "prLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "pullRequestLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "riskLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "independentReviewCount": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "independentReviews": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedReviewThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "riskTier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "conformance": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        },
+        "conformanceVerdict": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        },
+        "pr": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "ticket": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["pr"],
+          "properties": {
+            "pr": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["ticket"],
+          "properties": {
+            "ticket": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "state": { "type": "string" },
+        "failed": { "type": "array" },
+        "pending": { "type": "array" }
+      }
+    },
+    "pullRequest": {
+      "type": "object",
+      "anyOf": [
+        {
+          "required": ["number"],
+          "properties": {
+            "number": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["url"],
+          "properties": {
+            "url": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["headSha"],
+          "properties": {
+            "headSha": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["headRefName"],
+          "properties": {
+            "headRefName": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["headRefOid"],
+          "properties": {
+            "headRefOid": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["currentPrHeadSha"],
+          "properties": {
+            "currentPrHeadSha": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        }
+      ],
+      "properties": {
+        "id": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "identifier": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "issueId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "ticket": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "key": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "number": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prNumber": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "title": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "branch": { "type": ["string", "null"] },
+        "headRefName": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "headRefOid": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "worktree": { "type": ["string", "null"] },
+        "session": { "type": ["string", "null"] },
+        "sessionId": { "type": ["string", "null"] },
+        "state": { "type": ["string", "null"] },
+        "status": { "type": ["string", "null"] },
+        "workflowState": { "type": ["string", "null"] },
+        "stateType": { "type": ["string", "null"] },
+        "draftState": { "type": ["string", "null"] },
+        "source": { "type": ["string", "null"] },
+        "prUrl": { "type": ["string", "null"] },
+        "footprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "fileFootprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "files": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "paths": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "packages": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "hasReviewEvidence": { "type": "boolean" },
+        "reviewEvidenceCurrent": { "type": "boolean" },
+        "blockingFindings": { "type": "boolean" },
+        "changesRequested": { "type": "boolean" },
+        "linkedPrChanged": { "type": "boolean" },
+        "evidenceMissing": { "type": "boolean" },
+        "requiredChecksPassed": { "type": "boolean" },
+        "requiredChecksGreen": { "type": "boolean" },
+        "checksPassing": { "type": "boolean" },
+        "checksGreen": { "type": "boolean" },
+        "ciGreen": { "type": "boolean" },
+        "scopeMatches": { "type": "boolean" },
+        "diffMatchesScope": { "type": "boolean" },
+        "hostedReviewRequired": { "type": "boolean" },
+        "codeRabbitRequired": { "type": "boolean" },
+        "hostedReviewComplete": { "type": "boolean" },
+        "codeRabbitComplete": { "type": "boolean" },
+        "hostedReviewSkipped": { "type": "boolean" },
+        "codeRabbitSkipped": { "type": "boolean" },
+        "hostedReviewPending": { "type": "boolean" },
+        "hostedReviewCurrent": { "type": "boolean" },
+        "recommended": { "type": "boolean" },
+        "required": { "type": "boolean" },
+        "highRisk": { "type": "boolean" },
+        "prExists": { "type": "boolean" },
+        "explicitLocalCliRequest": { "type": "boolean" },
+        "remoteWorker": { "type": "boolean" },
+        "supportsLocalCli": { "type": "boolean" },
+        "requiresAutoReviewResolution": { "type": "boolean" },
+        "humanMergePrLabelApplied": { "type": "boolean" },
+        "humanReviewPrLabelApplied": { "type": "boolean" },
+        "hasHumanMergePrLabel": { "type": "boolean" },
+        "hasHumanReviewPrLabel": { "type": "boolean" },
+        "productionAction": { "type": "boolean" },
+        "humanDecisionPending": { "type": "boolean" },
+        "reviewVerdict": { "type": ["string", "null"] },
+        "codeReviewVerdict": { "type": ["string", "null"] },
+        "reviewedHeadSha": { "type": ["string", "null"] },
+        "currentPrHeadSha": { "type": ["string", "null"] },
+        "reviewDiffFingerprint": { "type": ["string", "null"] },
+        "currentReviewDiffFingerprint": { "type": ["string", "null"] },
+        "reviewRelevantDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedDiffFingerprint": { "type": ["string", "null"] },
+        "reviewedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewedDiffFingerprint": { "type": ["string", "null"] },
+        "hostedReviewHeadSha": { "type": ["string", "null"] },
+        "hostedReviewProvider": { "type": ["string", "null"] },
+        "reviewProvider": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "autoReviewMode": { "type": ["string", "null"] },
+        "autoReview": { "type": ["string", "null"] },
+        "reviewHeadSha": { "type": ["string", "null"] },
+        "conformanceHeadSha": { "type": ["string", "null"] },
+        "humanMergePrLabel": { "type": ["string", "null"] },
+        "humanReviewPrLabel": { "type": ["string", "null"] },
+        "reviewDecision": { "type": ["string", "null"] },
+        "reviewEvidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "evidenceLabel": { "anyOf": [{ "type": "string" }, { "type": "boolean" }] },
+        "labels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "issueLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "prLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "pullRequestLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "riskLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "independentReviewCount": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "independentReviews": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedReviewThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "unresolvedThreads": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "boolean" }, { "type": "array" }]
+        },
+        "riskTier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "conformance": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        },
+        "conformanceVerdict": {
+          "type": "string",
+          "pattern": "^(?:[Pp][Aa][Ss][Ss]|[Ff][Aa][Ii][Ll](?:[Ee][Dd])?|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Aa][Bb][Ll][Ee])$"
+        },
+        "open": { "type": "boolean" },
+        "closed": { "type": "boolean" },
+        "merged": { "type": "boolean" },
+        "isDraft": { "type": "boolean" },
+        "draft": { "type": "boolean" },
+        "isBot": { "type": "boolean" },
+        "isDependencyBot": { "type": "boolean" },
+        "dependencyBot": { "type": "boolean" },
+        "autoMergeArmed": { "type": "boolean" },
+        "reviewThreadsTruncated": { "type": "boolean" },
+        "reviewsTruncated": { "type": "boolean" },
+        "baseRefName": { "type": ["string", "null"] },
+        "mergeable": { "type": ["string", "null"] },
+        "mergeStateStatus": { "type": ["string", "null"] },
+        "updatedAt": { "type": ["string", "null"] },
+        "prState": { "type": ["string", "null"] },
+        "changedFiles": { "type": "integer", "minimum": 0 },
+        "checks": { "$ref": "#/definitions/checks" },
+        "requiredChecks": { "$ref": "#/definitions/checks" },
+        "latestReviews": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": { "type": "string" },
+              "headSha": { "type": ["string", "null"] },
+              "commitSha": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "anyOf": [
+        {
+          "required": ["identifier"],
+          "properties": {
+            "identifier": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["key"],
+          "properties": {
+            "key": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["url"],
+          "properties": {
+            "url": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        }
+      ],
+      "properties": {
+        "id": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "identifier": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "issueId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "ticket": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "key": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "number": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prNumber": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "title": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "branch": { "type": ["string", "null"] },
+        "headRefName": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "headRefOid": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "worktree": { "type": ["string", "null"] },
+        "session": { "type": ["string", "null"] },
+        "sessionId": { "type": ["string", "null"] },
+        "state": {
+          "anyOf": [
+            { "type": ["string", "null"] },
+            {
+              "type": "object",
+              "properties": { "name": { "type": "string" }, "type": { "type": "string" } }
+            }
+          ]
+        },
+        "status": { "type": ["string", "null"] },
+        "workflowState": { "type": ["string", "null"] },
+        "stateType": { "type": ["string", "null"] },
+        "draftState": { "type": ["string", "null"] },
+        "source": { "type": ["string", "null"] },
+        "prUrl": { "type": ["string", "null"] },
+        "footprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "fileFootprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "files": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "paths": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "packages": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "labels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "kind": { "type": "string" },
+        "kindLabel": { "type": "string" },
+        "kindName": { "type": "string" },
+        "implementationReady": { "type": "boolean" },
+        "readyForImplementation": { "type": "boolean" },
+        "estimate": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "estimatePoints": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "points": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "size": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "effort": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "bodyEstimate": { "anyOf": [{ "type": "number" }, { "type": ["string", "null"] }] },
+        "blockedBy": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "object" },
+            { "type": "array", "items": { "anyOf": [{ "type": "string" }, { "type": "object" }] } }
+          ]
+        },
+        "blockers": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "object" },
+            { "type": "array", "items": { "anyOf": [{ "type": "string" }, { "type": "object" }] } }
+          ]
+        },
+        "dependsOn": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "object" },
+            { "type": "array", "items": { "anyOf": [{ "type": "string" }, { "type": "object" }] } }
+          ]
+        },
+        "dependencies": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "object" },
+            { "type": "array", "items": { "anyOf": [{ "type": "string" }, { "type": "object" }] } }
+          ]
+        },
+        "activeClaim": { "type": "boolean" },
+        "claimed": { "type": "boolean" },
+        "delegated": { "type": "boolean" },
+        "openPr": { "type": "boolean" },
+        "hasOpenPr": { "type": "boolean" },
+        "openPullRequest": { "type": "boolean" },
+        "prOpen": { "type": "boolean" }
+      }
+    },
+    "work": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "identifier": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "issueId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "ticket": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "key": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "number": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prId": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "prNumber": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "title": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "branch": { "type": ["string", "null"] },
+        "headRefName": { "type": ["string", "null"] },
+        "headSha": { "type": ["string", "null"] },
+        "headRefOid": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "worktree": { "type": ["string", "null"] },
+        "session": { "type": ["string", "null"] },
+        "sessionId": { "type": ["string", "null"] },
+        "state": { "type": ["string", "null"] },
+        "status": { "type": ["string", "null"] },
+        "workflowState": { "type": ["string", "null"] },
+        "stateType": { "type": ["string", "null"] },
+        "draftState": { "type": ["string", "null"] },
+        "source": { "type": ["string", "null"] },
+        "prUrl": { "type": ["string", "null"] },
+        "footprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "fileFootprint": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "files": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "paths": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "packages": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "returned": { "type": "boolean" },
+        "stopped": { "type": "boolean" },
+        "hasPr": { "type": "boolean" },
+        "occupiesWorkerSlot": { "type": "boolean" },
+        "active": { "type": "boolean" },
+        "open": { "type": "boolean" },
+        "closed": { "type": "boolean" },
+        "merged": { "type": "boolean" },
+        "completedByMergedPr": { "type": "boolean" },
+        "prunable": { "type": "boolean" },
+        "detached": { "type": "boolean" },
+        "locked": { "type": "boolean" },
+        "dirty": { "type": ["boolean", "null"] },
+        "mergedIntoBaseline": { "type": ["boolean", "null"] },
+        "worker": { "type": ["string", "null"] },
+        "workerType": { "type": ["string", "null"] },
+        "agent": { "type": ["string", "null"] },
+        "agentType": { "type": ["string", "null"] },
+        "executor": { "type": ["string", "null"] },
+        "executionPath": { "type": ["string", "null"] },
+        "eligibleWorkers": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "workerPaths": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "allowedWorkers": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "workers": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "unlockCount": { "type": "number" },
+        "priority": { "type": "number" },
+        "labels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "issueLabels": {
+          "anyOf": [
+            { "type": "null" },
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "startableTicket": {
+      "allOf": [{ "$ref": "#/definitions/work" }],
+      "type": "object",
+      "properties": {
+        "id": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "identifier": {
+          "anyOf": [
+            { "type": "string", "pattern": "\\S" },
+            { "type": "integer", "minimum": 0 }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "required": ["identifier"],
+          "properties": {
+            "identifier": {
+              "anyOf": [
+                { "type": "string", "pattern": "\\S" },
+                { "type": "integer", "minimum": 0 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "doneStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "readinessLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "implementationReadyLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "agentReadinessLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "readyStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "linearBacklogStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "readyPromotionSourceStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "intakeStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "highRiskLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "lowRiskLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "remoteWorkerPaths": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "localWorkerPaths": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "startableStates": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "startableStateTypes": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "readyStateTypes": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "startableKindLabels": {
+          "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+        },
+        "doneState": { "type": "string" },
+        "readinessLabel": { "type": "string" },
+        "implementationReadyLabel": { "type": "string" },
+        "agentReadinessLabel": { "type": "string" },
+        "readyState": { "type": "string" },
+        "linearBacklogState": { "type": "string" },
+        "intakeState": { "type": "string" },
+        "inProgressState": { "type": "string" },
+        "startableState": { "type": "string" },
+        "startableStateType": { "type": "string" },
+        "readyStateType": { "type": "string" },
+        "startableKindLabel": { "type": "string" },
+        "humanMergePrLabel": { "type": "string" },
+        "humanReviewPrLabel": { "type": "string" },
+        "codeHostHumanMergePrLabel": { "type": "string" },
+        "codeHostHumanMergeLabel": { "type": "string" },
+        "codeHostHumanReviewPrLabel": { "type": "string" },
+        "codeHostHumanReviewLabel": { "type": "string" },
+        "codeHostPrAttentionLabel": { "type": "string" },
+        "mergeAuthority": { "type": "string" },
+        "remoteWorkerPath": { "type": "string" },
+        "localWorkerPath": { "type": "string" },
+        "defaultWorkerPath": { "type": "string" },
+        "hostedReviewProvider": { "type": "string" },
+        "deliveryMode": { "type": "string", "enum": ["production", "velocity"] },
+        "autoMergeRiskTiers": {
+          "anyOf": [
+            { "type": "string", "enum": ["low", "medium", "high"] },
+            { "type": "array", "items": { "type": "string", "enum": ["low", "medium", "high"] } }
+          ]
+        },
+        "requiredIndependentReviews": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "low": { "type": "integer", "minimum": 1 },
+                "medium": { "type": "integer", "minimum": 1 },
+                "high": { "type": "integer", "minimum": 1 }
+              }
+            }
+          ]
+        },
+        "requestedReadyStatePromotion": { "type": "boolean" },
+        "requestedLinearBacklogReview": { "type": "boolean" },
+        "secondReviewOnUncertainty": { "type": "boolean" },
+        "requireConformanceEvidence": { "type": "boolean" },
+        "requireDispatchFootprint": { "type": "boolean" },
+        "requiresAutoReviewResolution": { "type": "boolean" },
+        "supportsLocalCli": { "type": "boolean" },
+        "estimateRequired": { "type": "boolean" },
+        "estimatesRequired": { "type": "boolean" },
+        "requireEstimate": { "type": "boolean" },
+        "requireEstimates": { "type": "boolean" },
+        "requiresEstimate": { "type": "boolean" },
+        "requiredEstimate": { "type": "boolean" },
+        "requiredEstimates": { "type": "boolean" },
+        "requiredEstimateBeforeReady": { "type": "boolean" },
+        "estimateRequiredBeforeReady": { "type": "boolean" },
+        "estimatesRequiredBeforeReady": { "type": "boolean" },
+        "requireEstimateBeforeReady": { "type": "boolean" },
+        "requireEstimatesBeforeReady": { "type": "boolean" },
+        "workerConcurrencyCap": { "type": "integer", "minimum": 0 },
+        "cap": { "type": "integer", "minimum": 0 },
+        "localStartsBelowSoftLimit": { "type": "integer", "minimum": 0 },
+        "localBudgetSoftStopPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "localBudgetHardStopPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "estimate": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requiredBeforeReady": { "type": "boolean" },
+            "requiredForReady": { "type": "boolean" },
+            "required": { "type": "boolean" }
+          }
+        },
+        "estimates": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requiredBeforeReady": { "type": "boolean" },
+            "requiredForReady": { "type": "boolean" },
+            "required": { "type": "boolean" }
+          }
+        },
+        "estimatePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requiredBeforeReady": { "type": "boolean" },
+            "requiredForReady": { "type": "boolean" },
+            "required": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo": { "type": "string", "pattern": "^[^\\s/]+/[^\\s/]+$" },
+        "pullRequests": { "type": "array", "items": { "$ref": "#/definitions/pullRequest" } },
+        "tickets": { "type": "array", "items": { "$ref": "#/definitions/issue" } },
+        "linearIssues": { "type": "array", "items": { "$ref": "#/definitions/issue" } },
+        "activeLinearIssues": { "type": "array", "items": { "$ref": "#/definitions/issue" } },
+        "startableTickets": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/startableTicket" }
+        },
+        "dispatches": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "ledgerDispatches": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "activeWork": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "workers": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "worktrees": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "previews": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "reviewEvidenceByPr": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/evidence" }
+        },
+        "reviewEvidence": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/evidence" }
+        },
+        "hostedReviewByPr": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/evidence" }
+        },
+        "reviewRequestsByPr": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/evidence" }
+        },
+        "reviewRequestByPr": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/evidence" }
+        },
+        "reviewEvidenceChecks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/reviewEvidenceCheck" }
+        },
+        "reviewDiffByPr": { "type": "object", "additionalProperties": { "type": "string" } },
+        "continuationByPr": { "type": "object", "additionalProperties": { "type": "string" } },
+        "readyStatePromotionOptions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requestedReadyStatePromotion": { "type": "boolean" },
+            "requestedLinearBacklogReview": { "type": "boolean" }
+          }
+        },
+        "activeSignalExpected": { "type": "boolean" },
+        "localBudgetUsagePercent": { "type": "number", "minimum": 0 },
+        "tokenBudgetRemaining": { "type": "number", "minimum": 0 },
+        "timeBudgetRemainingMinutes": { "type": "number", "minimum": 0 }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo": { "type": "string", "pattern": "^[^\\s/]+/[^\\s/]+$" },
+        "v": { "type": "integer", "minimum": 1 },
+        "generatedAt": { "type": "string" },
+        "sources": { "type": "object" },
+        "baseline": {
+          "type": "object",
+          "properties": {
+            "branch": { "type": ["string", "null"] },
+            "headSha": { "type": ["string", "null"] },
+            "green": { "type": "boolean" },
+            "checks": { "$ref": "#/definitions/checks" }
+          }
+        },
+        "footprint": { "type": "object" },
+        "prs": { "type": "array", "items": { "$ref": "#/definitions/pullRequest" } },
+        "worktrees": { "type": "array", "items": { "$ref": "#/definitions/work" } },
+        "linear": {
+          "type": "object",
+          "properties": {
+            "skipped": { "type": ["string", "null"] },
+            "issues": { "type": "array", "items": { "$ref": "#/definitions/issue" } },
+            "activeIssues": { "type": "array", "items": { "$ref": "#/definitions/issue" } }
+          }
+        },
+        "usage": { "type": "object" }
+      }
+    }
+  }
+}

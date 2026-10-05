@@ -1,0 +1,6 @@
+interface:
+  display_name: "Architecture"
+  short_description: "Assess architecture and design module interfaces"
+  default_prompt: "Use $ziw-architecture to assess this codebase area or design this module interface. Trace real callers, compare alternatives, and recommend changes with migration and verification evidence. Keep proposals advisory and hand unresolved decisions to Grill."
+policy:
+  allow_implicit_invocation: true

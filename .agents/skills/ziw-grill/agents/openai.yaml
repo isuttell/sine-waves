@@ -1,0 +1,6 @@
+interface:
+  display_name: "Grill"
+  short_description: "Resolve plans into ready specs"
+  default_prompt: "Use $ziw-grill to clarify this idea, plan, or spec in rounds of independent questions. Resolve discoverable facts first, preserve unanswered decisions, and update only confirmed planning artifacts. Require explicit approval before Ready for slicing; do not create tickets."
+policy:
+  allow_implicit_invocation: true
