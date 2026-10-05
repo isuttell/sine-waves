@@ -1,0 +1,6 @@
+interface:
+  display_name: "Issue Triage"
+  short_description: "Shape tracker tickets"
+  default_prompt: "Use $ziw-triage for issue tracker triage that grooms the current project configured ready-state queue for Orchestrator. Read repo workflow config, run tick-snapshot with the configured repo, tracker team, route label, and ready+intake states, usually --linear-states Todo,Triage, then feed its compact JSON output to tick-plan and linear-dag-start using compact JSON values derived from the verified Markdown config; do not pass Markdown config directly, and use --debug only to diagnose planner decisions. A normal run processes configured intake states: move only complete ready-for-agent kind-slice tickets to the configured ready state, even when dependency-blocked; Linear Backlog still requires an explicit request. Include active or PR-linked issues only when current evidence shows stale workflow metadata needing triage repair. Freeze the issue set, read its cited source-of-truth project docs when needed, repair the smallest direct dependency graph, and fix labels, body contracts, estimates, stale readiness, and exact human or To Issues questions. Use tracker tools for targeted reads and mutations, not ad hoc GitHub, CI, deploy, log, or code exploration."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Review code changes"
+  default_prompt: "Use $ziw-code-review for the requested target, scaling effort and report length to risk. Do not auto-trigger solely because a commit or PR changed. Treat implementation-workflow review as Author QA, leave review evidence unchanged, and never mutate tracker or merge-ready labels. Independent evidence requires fresh reviewer context; a worktree alone is insufficient. Follow the skill's authority, conditional references, and report contract."
+policy:
+  allow_implicit_invocation: true

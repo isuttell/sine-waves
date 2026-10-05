@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup"
+  short_description: "Create or refresh config"
+  default_prompt: "Use $ziw-setup to create or refresh this repo's agent workflow config by reading any existing config first, including the planning artifact authority, status convention, and documentation checks used by $ziw-grill."
+policy:
+  allow_implicit_invocation: true

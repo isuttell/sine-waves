@@ -1,0 +1,6 @@
+interface:
+  display_name: "To Issues"
+  short_description: "Spec or PRD into ready slices"
+  default_prompt: "Use $ziw-to-issues to turn this spec, PRD, or epic ticket into the fewest dependency-ordered one-PR implementation tickets that ship safely: each a whole outcome with its tests and docs and explicit scope boundaries, split only for a named split reason, with layer, step, test-only, docs-only, and trivially small fragments merged and only plan-required work ticketed. Adopt existing tickets, apply the body contract, configured estimates, and kind labels, and emit the dependency graph and file footprint. Plans explicitly marked Draft get no slices or readiness; preserve one as a non-ready kind-spec or kind-epic container only when explicitly asked. Return material ambiguity to $ziw-grill."
+policy:
+  allow_implicit_invocation: true

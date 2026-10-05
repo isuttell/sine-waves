@@ -1,0 +1,6 @@
+interface:
+  display_name: "Create PR"
+  short_description: "Create pull requests"
+  default_prompt: "Use $ziw-pr to open or update a non-draft ready-for-review PR for my current branch and hand it off for independent review. Use best judgment on whether author QA adds value; do not run or repeat it merely because a commit changed. Author QA is not independent review evidence. Do not apply or clear review-evidence labels, move the issue to `Ready to Merge`, or apply merge-ready PR labels."
+policy:
+  allow_implicit_invocation: true

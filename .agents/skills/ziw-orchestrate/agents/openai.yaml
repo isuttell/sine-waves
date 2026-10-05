@@ -1,0 +1,6 @@
+interface:
+  display_name: "Orchestrate"
+  short_description: "Orchestrate tracked work"
+  default_prompt: "Use $ziw-orchestrate to run a bounded tracker work loop for explicit issues, a filter, project, delivery scope, or Linear Backlog clear run. Refresh tracker and PR state, use the tick snapshot/planner scripts, delegate implementation/review/triage, preserve one-ticket scope boundaries, manage draft PRs and merge-ready human-merge labels, and stop when no safe action remains."
+policy:
+  allow_implicit_invocation: true
